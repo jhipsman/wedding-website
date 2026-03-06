@@ -34,14 +34,12 @@
     <span class="deadline">Kindly reply by June 1st, 2026</span>
   </div>
 
-  <form class="rsvp-form" id="rsvpForm"
-        action="https://formspree.io/f/xgoneppj"
-        method="POST">
+  <form class="rsvp-form" action="https://formspree.io/f/xgoneppj" method="POST">
 
     <input type="hidden" name="_subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
     <input type="hidden" name="_next" value="thankyou.html">
 
-    <!-- Name -->
+    <!-- 1. Name -->
     <div class="form-row">
       <div class="form-group anim anim-d1">
         <label>First Name</label>
@@ -53,13 +51,13 @@
       </div>
     </div>
 
-    <!-- Email -->
+    <!-- 2. Email -->
     <div class="form-group anim anim-d2">
       <label>Email Address</label>
       <input type="email" name="email" placeholder="your@email.com" required>
     </div>
 
-    <!-- Attending -->
+    <!-- 3. Attending -->
     <div class="form-group anim anim-d2">
       <label>Will you be attending?</label>
       <div class="radio-group">
@@ -76,13 +74,13 @@
       </div>
     </div>
 
-    <!-- Fields shown only if attending -->
+    <!-- Fields only visible when attending YES -->
     <div class="guest-fields" id="guestFields">
 
-      <!-- Guest count -->
+      <!-- 4. Number of guests + names -->
       <div class="form-group anim">
         <label>Number of Guests (including yourself)</label>
-        <select name="guest_count" id="guestCount" onchange="updateMealFields()">
+        <select name="guest_count" id="guestCount" onchange="updateGuestNames()">
           <option value="1">1 Guest</option>
           <option value="2">2 Guests</option>
           <option value="3">3 Guests</option>
@@ -90,28 +88,28 @@
         </select>
       </div>
 
-      <!-- Dynamic per-person meal + name fields -->
-      <div id="mealSelections"></div>
+      <!-- Dynamic additional guest name fields (guest 1 = the person filling in) -->
+      <div id="guestNameFields"></div>
 
-      <!-- Dietary -->
+      <!-- 5. Dietary restrictions -->
       <div class="form-group anim">
         <label>Dietary Restrictions or Allergies</label>
         <textarea name="dietary" placeholder="Please let us know of any dietary needs or allergies…"></textarea>
       </div>
 
-      <!-- Hotel -->
+      <!-- 6. Hotel block -->
       <div class="form-group anim">
         <label>Will you be staying at our hotel block?</label>
         <div class="radio-group" id="hotelGroup">
-          <label class="radio-option" onclick="selectRadioGroup('hotelGroup', this)">
+          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
             <input type="radio" name="staying_at_hotel" value="Yes">
             <span class="radio-dot"></span>Yes
           </label>
-          <label class="radio-option" onclick="selectRadioGroup('hotelGroup', this)">
+          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
             <input type="radio" name="staying_at_hotel" value="No">
             <span class="radio-dot"></span>No
           </label>
-          <label class="radio-option" onclick="selectRadioGroup('hotelGroup', this)">
+          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
             <input type="radio" name="staying_at_hotel" value="Not Sure Yet">
             <span class="radio-dot"></span>Not Sure Yet
           </label>
@@ -119,29 +117,14 @@
         <span class="form-hint">We've reserved a discounted block at the JFK Regency Hyatt — <a href="stay.html" style="color:var(--eucalyptus);">details here</a>.</span>
       </div>
 
-      <!-- Song request -->
+      <!-- 7. Song request -->
       <div class="form-group anim">
         <label>Song Request 🎵</label>
         <input type="text" name="song_request" placeholder="What song will get you on the dance floor?">
         <span class="form-hint">Help us build the perfect playlist!</span>
       </div>
 
-      <!-- How do you know the couple -->
-      <div class="form-group anim">
-        <label>How do you know the couple?</label>
-        <select name="how_you_know">
-          <option value="" disabled selected>Select one…</option>
-          <option>Friend of Jeanine</option>
-          <option>Friend of Johnny</option>
-          <option>Family of Jeanine</option>
-          <option>Family of Johnny</option>
-          <option>Friend of both</option>
-          <option>Coworker</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <!-- Advice -->
+      <!-- 8. Advice -->
       <div class="form-group anim">
         <label>Advice for the Newlyweds <span style="opacity:.5">(optional)</span></label>
         <textarea name="advice" placeholder="Share your best marriage advice…"></textarea>
@@ -149,13 +132,13 @@
 
     </div>
 
-    <!-- Note — shown to everyone -->
-    <div class="form-group anim anim-d4">
+    <!-- 9. Note — shown to everyone -->
+    <div class="form-group anim anim-d3">
       <label>A Note for the Couple <span style="opacity:.5">(optional)</span></label>
       <textarea name="note" placeholder="Share a wish, memory, or kind words…"></textarea>
     </div>
 
-    <div class="rsvp-submit-row anim anim-d5">
+    <div class="rsvp-submit-row anim anim-d4">
       <button type="submit" class="btn">Send My RSVP</button>
     </div>
 
@@ -185,43 +168,35 @@
 <script>
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 
-// Attending toggle
+// Attending toggle — shows/hides guest fields
 let attendingChoice = null;
 function selectAttending(val) {
   attendingChoice = val;
   document.getElementById('opt-yes').classList.toggle('selected', val === 'yes');
   document.getElementById('opt-no').classList.toggle('selected',  val === 'no');
   const gf = document.getElementById('guestFields');
-  if (val === 'yes') { gf.classList.add('visible'); updateMealFields(); }
+  if (val === 'yes') { gf.classList.add('visible'); updateGuestNames(); }
   else { gf.classList.remove('visible'); }
 }
 
-// Generic radio group styling
-function selectRadioGroup(groupId, el) {
-  document.getElementById(groupId).querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+// Generic radio group visual selection
+function selectGroup(groupId, el) {
+  document.getElementById(groupId)
+    .querySelectorAll('.radio-option')
+    .forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
 }
 
-// Dynamic meal + guest name fields
-const mealOptions = ['Chicken', 'Fish', 'Vegetarian'];
-function updateMealFields() {
+// Render extra guest name fields (skip guest 1 — that's the person submitting)
+function updateGuestNames() {
   const count = parseInt(document.getElementById('guestCount').value) || 1;
-  const wrap = document.getElementById('mealSelections');
+  const wrap = document.getElementById('guestNameFields');
   wrap.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    const namePart = i > 0
-      ? `<div class="form-group" style="margin-bottom:8px">
-           <label>Guest ${i+1} Name</label>
-           <input type="text" name="guest_${i+1}_name" placeholder="Guest name">
-         </div>`
-      : '';
+  for (let i = 2; i <= count; i++) {
     wrap.innerHTML += `
-      ${namePart}
-      <div class="form-group" style="margin-bottom:18px">
-        <label>${i === 0 ? 'Your Meal Preference' : 'Guest ' + (i+1) + ' Meal Preference'}</label>
-        <select name="meal_${i+1}">
-          ${mealOptions.map(o => `<option value="${o}">${o}</option>`).join('')}
-        </select>
+      <div class="form-group" style="margin-bottom:18px;">
+        <label>Guest ${i} Full Name</label>
+        <input type="text" name="guest_${i}_name" placeholder="Guest ${i} name">
       </div>`;
   }
 }
