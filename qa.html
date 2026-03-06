@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q&amp;A — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="stay.html">Where to Stay</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="travel.html">Travel</a></li>
+    <li><a href="qa.html" class="active">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="inner">
+
+  <div class="page-header anim">
+    <h1>Questions &amp; Answers</h1>
+    <p>Everything you need to know before the big day. Still have questions? Reach out — we're happy to help!</p>
+  </div>
+
+  <p class="sec-label">Frequently Asked</p>
+
+  <div class="qa-list anim anim-d1">
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What is the dress code?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Cocktail attire. Think elegant and celebratory — suits, dresses, or dressy separates are all perfect. We encourage you to dress up and celebrate with us!</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Is this an adults-only event?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Yes, this will be an adults-only reception. While we love your little ones, we ask that guests make childcare arrangements for the evening so everyone can fully enjoy the celebration.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Can I bring a plus-one?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Due to venue capacity, we are only able to accommodate guests who are listed on the invitation. If you have questions about your invitation, please reach out to us directly.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What time should I arrive?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Cocktail hour begins at 5:30 PM. We suggest arriving a few minutes early to park and get settled before the fun begins!</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Is there parking at the venue?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Yes! Russo's on the Bay has ample complimentary parking on-site. Valet service may also be available — we'll update this page with details closer to the date.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Can I take photos during the reception?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Absolutely! We would love for you to capture memories and share them with us. We'll be setting up a way for guests to share photos after the wedding — stay tuned for details.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Will there be a shuttle between the hotel and venue?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">We're looking into shuttle arrangements between the Hyatt and Russo's on the Bay and will update this page as soon as details are confirmed. In the meantime, Uber and Lyft are very reliable in the area.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What if I have dietary restrictions?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Please note any dietary restrictions or allergies in your RSVP form and we will do our best to accommodate you. Don't hesitate to reach out if you have specific concerns.</div>
+    </div>
+
+  </div>
+
+  <div class="card anim anim-d2" style="text-align:center;padding:36px 32px;">
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;font-style:italic;color:var(--text-dark);margin-bottom:12px;">Still have questions?</h3>
+    <p style="font-size:13px;color:var(--text-mid);line-height:1.75;margin-bottom:24px;">Don't hesitate to reach out — we're happy to help with anything you need.</p>
+    <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--text-dark);display:block;margin-bottom:4px;">Jeanine</span>
+        <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--eucalyptus);display:block;margin-bottom:6px;">Bride</span>
+        <!-- Replace with real email -->
+        <a href="mailto:jeanine@email.com" style="font-size:13px;color:var(--text-mid);text-decoration:none;">jeanine@email.com</a>
+      </div>
+      <div style="text-align:center;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--text-dark);display:block;margin-bottom:4px;">Johnny</span>
+        <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--eucalyptus);display:block;margin-bottom:6px;">Groom</span>
+        <!-- Replace with real email -->
+        <a href="mailto:johnny@email.com" style="font-size:13px;color:var(--text-mid);text-decoration:none;">johnny@email.com</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
+function toggleQA(btn) {
+  const item = btn.closest('.qa-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.qa-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

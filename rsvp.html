@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn active">RSVP</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="stay.html">Where to Stay</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="travel.html">Travel</a></li>
+    <li><a href="qa.html">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="rsvp-wrap">
+
+  <div class="rsvp-header anim">
+    <h1>Kindly Reply</h1>
+    <p>We would be honored to have you celebrate with us. Please fill out the form below for your party.</p>
+    <span class="deadline">Kindly reply by June 1st, 2026</span>
+  </div>
+
+  <div id="rsvpFormWrap">
+  <!-- ⬇ Formspree: replace xgoneppj with your actual Formspree form ID -->
+  <form class="rsvp-form" id="rsvpForm"
+        action="https://formspree.io/f/xgoneppj"
+        method="POST">
+
+    <!-- Hidden field to help identify which response is which -->
+    <input type="hidden" name="_subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
+    <input type="hidden" name="_next" value="thankyou.html">
+
+    <div class="form-row">
+      <div class="form-group anim anim-d1">
+        <label>First Name</label>
+        <input type="text" name="first_name" placeholder="First name" required>
+      </div>
+      <div class="form-group anim anim-d1">
+        <label>Last Name</label>
+        <input type="text" name="last_name" placeholder="Last name" required>
+      </div>
+    </div>
+
+    <div class="form-group anim anim-d2">
+      <label>Email Address</label>
+      <input type="email" name="email" placeholder="your@email.com" required>
+    </div>
+
+    <div class="form-group anim anim-d2">
+      <label>Will you be attending?</label>
+      <div class="radio-group">
+        <label class="radio-option" id="opt-yes" onclick="selectAttending('yes')">
+          <input type="radio" name="attending" value="Joyfully Accepts" required>
+          <span class="radio-dot"></span>
+          Joyfully Accepts
+        </label>
+        <label class="radio-option" id="opt-no" onclick="selectAttending('no')">
+          <input type="radio" name="attending" value="Regretfully Declines">
+          <span class="radio-dot"></span>
+          Regretfully Declines
+        </label>
+      </div>
+    </div>
+
+    <!-- These fields only show if attending -->
+    <div class="guest-fields" id="guestFields">
+
+      <div class="form-group anim">
+        <label>Number of Guests (including yourself)</label>
+        <select name="guest_count" id="guestCount" onchange="updateMealFields()">
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+
+      <div id="mealSelections"></div>
+
+      <div class="form-group anim">
+        <label>Dietary Restrictions or Allergies</label>
+        <textarea name="dietary" placeholder="Please let us know of any dietary needs…"></textarea>
+      </div>
+
+      <div class="form-group anim">
+        <label>Song Request 🎵</label>
+        <input type="text" name="song_request" placeholder="What song will get you on the dance floor?">
+        <span class="form-hint">Help us build the perfect playlist!</span>
+      </div>
+
+    </div>
+
+    <div class="form-group anim anim-d4">
+      <label>A Note for the Couple <span style="opacity:.5">(optional)</span></label>
+      <textarea name="note" placeholder="Share a wish, memory, or kind words…"></textarea>
+    </div>
+
+    <div class="rsvp-submit-row anim anim-d5">
+      <button type="submit" class="btn">Send My RSVP</button>
+    </div>
+
+  </form>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+
+let attendingChoice = null;
+function selectAttending(val) {
+  attendingChoice = val;
+  document.getElementById('opt-yes').classList.toggle('selected', val === 'yes');
+  document.getElementById('opt-no').classList.toggle('selected',  val === 'no');
+  const gf = document.getElementById('guestFields');
+  if (val === 'yes') { gf.classList.add('visible'); updateMealFields(); }
+  else { gf.classList.remove('visible'); }
+}
+
+const mealOptions = ['Chicken', 'Fish', 'Vegetarian'];
+function updateMealFields() {
+  const count = parseInt(document.getElementById('guestCount').value) || 1;
+  const wrap = document.getElementById('mealSelections');
+  wrap.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const label = i === 0 ? 'Your Meal Preference' : `Guest ${i + 1} Name & Meal`;
+    const namePart = i > 0
+      ? `<div class="form-group" style="margin-bottom:8px">
+           <label>Guest ${i+1} Name</label>
+           <input type="text" name="guest_${i+1}_name" placeholder="Guest name">
+         </div>`
+      : '';
+    wrap.innerHTML += `
+      ${namePart}
+      <div class="form-group" style="margin-bottom:18px">
+        <label>${i === 0 ? 'Your Meal Preference' : 'Guest ' + (i+1) + ' Meal Preference'}</label>
+        <select name="meal_${i+1}">
+          ${mealOptions.map(o => `<option value="${o}">${o}</option>`).join('')}
+        </select>
+      </div>`;
+  }
+}
+</script>
+</body>
+</html>

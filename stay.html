@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where to Stay — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="stay.html" class="active">Where to Stay</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="travel.html">Travel</a></li>
+    <li><a href="qa.html">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="inner">
+
+  <div class="page-header anim">
+    <h1>Where to Stay</h1>
+    <p>We want to make sure our out-of-town guests are comfortable and close to the celebration.</p>
+  </div>
+
+  <p class="sec-label">Our Room Block</p>
+
+  <div class="stay-featured anim anim-d1">
+    <span class="stay-badge">Official Hotel Block</span>
+    <h2>JFK Regency Hyatt Hotel</h2>
+    <p class="stay-address">110-00 Rockaway Boulevard<br>Jamaica, New York 11420</p>
+    <ul class="stay-perks">
+      <li>Special discounted rate exclusively for our guests</li>
+      <li>Close proximity to the reception venue</li>
+      <li>Easy access from JFK Airport</li>
+      <li>Complimentary airport shuttle service available</li>
+    </ul>
+    <a class="btn" href="#">Book Your Room</a>
+    <p class="card-note" style="margin-top:14px;">Please scan the QR code on your invitation for our custom booking link and group rate.</p>
+  </div>
+
+  <p class="sec-label">Other Nearby Options</p>
+
+  <div class="stay-alt-grid anim anim-d2">
+    <div class="stay-alt-card">
+      <h3>Hilton Garden Inn JFK</h3>
+      <span class="stay-dist">~5 min from venue</span>
+      <p>Comfortable rooms with shuttle service to JFK Airport — a solid choice for guests flying in.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>Hampton Inn Queens</h3>
+      <span class="stay-dist">~10 min from venue</span>
+      <p>Affordable and reliable with easy access to public transit and the Cross Bay corridor.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>TWA Hotel at JFK</h3>
+      <span class="stay-dist">~10 min from venue</span>
+      <p>A stunning mid-century landmark inside JFK Airport — unforgettable for the design lovers in your group.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>Airbnb in Howard Beach</h3>
+      <span class="stay-dist">~5 min from venue</span>
+      <p>Search for rentals in Howard Beach or Broad Channel for a more local and flexible option.</p>
+    </div>
+  </div>
+
+  <div class="info-note anim anim-d3">
+    <span class="info-note-icon">💡</span>
+    <p>We recommend booking early — July weekends fill up fast in New York. If you have questions about accommodations, don't hesitate to reach out!</p>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>

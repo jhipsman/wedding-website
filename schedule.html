@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a href="schedule.html" class="active">Schedule</a></li>
+    <li><a href="stay.html">Where to Stay</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="travel.html">Travel</a></li>
+    <li><a href="qa.html">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="inner">
+
+  <div class="page-header anim">
+    <h1>Day-of Schedule</h1>
+    <p>Sunday, July 19th, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  </div>
+
+  <p class="sec-label">The Celebration</p>
+
+  <div class="timeline">
+
+    <div class="tl-item featured anim anim-d1">
+      <div class="tl-time">
+        <span class="t-main">5:30</span>
+        <span class="t-sub">evening</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag">Reception Begins</span>
+        <div class="tl-title">Cocktail Hour</div>
+        <p class="tl-desc">Join us for welcome cocktails, passed hors d'oeuvres, and the start of the celebration.</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+    <div class="tl-item anim anim-d2">
+      <div class="tl-time">
+        <span class="t-main">To follow</span>
+        <span class="t-sub">&nbsp;</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag" style="background:var(--willow);color:var(--text-dark);">Dinner</span>
+        <div class="tl-title">Dinner</div>
+        <p class="tl-desc">A seated dinner celebrating Jeanine and Johnny with the people they love most.</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+    <div class="tl-item anim anim-d3">
+      <div class="tl-time">
+        <span class="t-main">All night</span>
+        <span class="t-sub">&nbsp;</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag" style="background:var(--eucalyptus-pale);color:var(--text-dark);">Dancing</span>
+        <div class="tl-title">Dancing</div>
+        <p class="tl-desc">Hit the dance floor and celebrate the night away. We can't wait to party with you!</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="sec-label">Good to Know</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;" class="anim anim-d4">
+    <div class="card">
+      <span class="card-icon">🔞</span>
+      <div class="card-title">Adults Only</div>
+      <p class="card-text">Kindly note this will be an adults-only reception. We appreciate your understanding and hope you can still join us!</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📅</span>
+      <div class="card-title">RSVP Deadline</div>
+      <p class="card-text">Please reply by <strong>June 1st, 2026</strong> so we can make sure everything is perfect for the big day.</p>
+      <br>
+      <a class="btn" href="rsvp.html" style="font-size:9px;padding:10px 22px;">RSVP Now</a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>

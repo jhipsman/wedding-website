@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registry — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="stay.html">Where to Stay</a></li>
+    <li><a href="registry.html" class="active">Registry</a></li>
+    <li><a href="travel.html">Travel</a></li>
+    <li><a href="qa.html">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="inner">
+
+  <div class="page-header anim">
+    <h1>Registry</h1>
+    <p>Your presence at our wedding is the greatest gift of all. For those who wish to give, we've created a few options below.</p>
+  </div>
+
+  <div class="registry-note anim anim-d1">
+    "The most important thing to us is celebrating with you. Please don't feel obligated — your company means everything."
+  </div>
+
+  <p class="sec-label">Our Registries</p>
+
+  <div class="registry-grid anim anim-d2">
+    <div class="registry-card">
+      <span class="reg-logo">🏠</span>
+      <h3>Crate & Barrel</h3>
+      <p>Kitchen, dining, and home essentials to start our life together.</p>
+      <!-- Replace # with your actual registry link -->
+      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
+    </div>
+    <div class="registry-card">
+      <span class="reg-logo">🍳</span>
+      <h3>Williams Sonoma</h3>
+      <p>Cookware, appliances, and everything we need for our home kitchen.</p>
+      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
+    </div>
+    <div class="registry-card">
+      <span class="reg-logo">🎁</span>
+      <h3>Amazon</h3>
+      <p>A mix of everyday essentials and special items for our new home.</p>
+      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
+    </div>
+  </div>
+
+  <p class="sec-label">Honeymoon Fund</p>
+
+  <div class="registry-cash anim anim-d3">
+    <div>
+      <h3>Contribute to Our Honeymoon</h3>
+      <p>We're dreaming of a special trip to celebrate our marriage. If you'd like to contribute to our honeymoon fund, we would be so grateful. Every contribution, big or small, helps make our dream trip a reality.</p>
+      <br>
+      <!-- Replace # with your Venmo, PayPal, or Zola fund link -->
+      <a class="btn" href="#">Contribute</a>
+    </div>
+    <div class="registry-cash-visual">🌍</div>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>

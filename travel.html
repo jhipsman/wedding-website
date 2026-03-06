@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel — Jeanine & Johnny</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="index.html">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rsvp.html" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="stay.html">Where to Stay</a></li>
+    <li><a href="registry.html">Registry</a></li>
+    <li><a href="travel.html" class="active">Travel</a></li>
+    <li><a href="qa.html">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page-wrap">
+<div class="inner">
+
+  <div class="page-header anim">
+    <h1>Getting There</h1>
+    <p>Everything you need to find your way to Queens, New York for our big day.</p>
+  </div>
+
+  <p class="sec-label">Our Venues</p>
+
+  <div class="travel-venues anim anim-d1">
+    <div class="venue-card">
+      <span class="venue-type">Reception</span>
+      <h3>Russo's on the Bay</h3>
+      <address>162-45 Cross Bay Boulevard<br>Howard Beach, Queens, NY 11414</address>
+      <a class="btn btn-outline" style="font-size:9px;padding:10px 22px;"
+         href="https://maps.google.com/?q=Russo's+on+the+Bay+162-45+Cross+Bay+Blvd+Queens+NY"
+         target="_blank" rel="noopener">Get Directions</a>
+    </div>
+    <div class="venue-card">
+      <span class="venue-type">Hotel Block</span>
+      <h3>JFK Regency Hyatt</h3>
+      <address>110-00 Rockaway Boulevard<br>Jamaica, New York 11420</address>
+      <a class="btn btn-outline" style="font-size:9px;padding:10px 22px;"
+         href="https://maps.google.com/?q=Hyatt+Regency+JFK+110-00+Rockaway+Blvd+Jamaica+NY"
+         target="_blank" rel="noopener">Get Directions</a>
+    </div>
+  </div>
+
+  <p class="sec-label">How to Get Here</p>
+
+  <div class="travel-grid anim anim-d2">
+    <div class="travel-card">
+      <span class="t-icon">✈️</span>
+      <h3>By Air</h3>
+      <p>The closest airports are:</p>
+      <ul>
+        <li><strong>JFK</strong> — 10 min from venue, ideal</li>
+        <li><strong>LGA (LaGuardia)</strong> — ~30 min by car</li>
+        <li><strong>EWR (Newark)</strong> — ~45 min by car</li>
+      </ul>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚗</span>
+      <h3>By Car</h3>
+      <p>Russo's on the Bay is easily accessible via the Belt Parkway (Exit 17 – Cross Bay Blvd). Ample complimentary parking is available at the venue.</p>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚇</span>
+      <h3>By Subway / AirTrain</h3>
+      <p>Take the A train to Howard Beach–JFK Airport station. From there it's a short rideshare to the venue. The AirTrain also connects JFK to the subway system.</p>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚖</span>
+      <h3>Rideshare</h3>
+      <p>Uber and Lyft are widely available throughout Queens and from all major airports. We recommend pre-booking for a Sunday evening for reliability.</p>
+    </div>
+  </div>
+
+  <div class="info-note anim anim-d3">
+    <span class="info-note-icon">🗽</span>
+    <p>If you're visiting New York for the first time, consider arriving a day early to explore the city! Let us know if you'd like any local recommendations — we'd love to help you make the most of your trip.</p>
+  </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-mark">
+    <div class="footer-line"></div>
+    <span class="footer-initials">J &amp; J</span>
+    <div class="footer-line"></div>
+  </div>
+  <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="rsvp.html">RSVP</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="stay.html">Where to Stay</a>
+    <a href="registry.html">Registry</a>
+    <a href="travel.html">Travel</a>
+    <a href="qa.html">Q &amp; A</a>
+  </div>
+</footer>
+
+<script>function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}</script>
+</body>
+</html>
