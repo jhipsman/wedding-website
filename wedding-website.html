@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeanine & Johnny — July 19, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --white:            #ffffff;
+  --off-white:        #f7faf8;
+  --eucalyptus:       #5c8a72;
+  --eucalyptus-light: #7aab8f;
+  --eucalyptus-pale:  #c4dbd0;
+  --eucalyptus-mist:  #e4eeea;
+  --eucalyptus-deep:  #3b6650;
+  --willow:           #a3c4b0;
+  --moss:             #8fb09a;
+  --pewter:           #6e8c7c;
+  --text-dark:        #1c2b22;
+  --text-mid:         #4a6357;
+  --text-light:       #7a9e8c;
+  --nav-h:            64px;
+}
+
+body {
+  background: var(--off-white);
+  color: var(--text-dark);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(247,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--eucalyptus-mist);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--text-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--eucalyptus-light); }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--eucalyptus); }
+.nav-rsvp-btn {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: var(--eucalyptus);
+  color: var(--white) !important;
+  padding: 8px 18px;
+  border-radius: 2px;
+  transition: background 0.2s !important;
+}
+.nav-rsvp-btn:hover { background: var(--eucalyptus-deep) !important; color: var(--white) !important; }
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-dark);
+  transition: all 0.3s;
+}
+
+/* ═══════════════════════════════════════
+   PAGE SYSTEM
+═══════════════════════════════════════ */
+.page-section {
+  display: none;
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+}
+.page-section.active { display: block; }
+
+/* shared inner */
+.inner {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 64px 36px 96px;
+}
+.inner-wide {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 36px 96px;
+}
+
+/* shared section label */
+.sec-label {
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--eucalyptus);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--eucalyptus-pale), transparent);
+}
+
+/* shared divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 auto;
+}
+.ornament-divider::before { content:''; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--eucalyptus-pale)); }
+.ornament-divider::after  { content:''; flex:1; height:1px; background: linear-gradient(to left,  transparent, var(--eucalyptus-pale)); }
+.ornament-divider .orn { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--eucalyptus-light); opacity:.8; }
+
+/* shared card */
+.card {
+  background: var(--white);
+  border: 1px solid var(--eucalyptus-mist);
+  border-radius: 6px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 24px rgba(92,138,114,0.07);
+}
+.card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background: linear-gradient(to right, var(--eucalyptus-pale), var(--eucalyptus), var(--eucalyptus-pale));
+}
+.card-icon { font-size:22px; margin-bottom:12px; display:block; }
+.card-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px; font-weight:500;
+  margin-bottom:10px;
+  color:var(--text-dark);
+}
+.card-text { font-size:13px; line-height:1.78; color:var(--text-mid); }
+.card-text strong { font-weight:400; color:var(--eucalyptus-deep); font-style:italic; }
+.card-note { margin-top:10px; font-size:11.5px; font-style:italic; color:var(--text-light); }
+
+/* btn */
+.btn {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: var(--eucalyptus);
+  color: var(--white);
+  padding: 13px 32px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'Jost', sans-serif;
+}
+.btn:hover { background: var(--eucalyptus-deep); transform: translateY(-1px); }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--eucalyptus-pale);
+  color: var(--eucalyptus);
+}
+.btn-outline:hover { background: var(--eucalyptus-mist); transform: translateY(-1px); }
+
+/* animations */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.anim { animation: fadeUp 0.8s ease both; }
+.anim-d1 { animation-delay:.1s; }
+.anim-d2 { animation-delay:.22s; }
+.anim-d3 { animation-delay:.34s; }
+.anim-d4 { animation-delay:.46s; }
+.anim-d5 { animation-delay:.58s; }
+
+/* footer */
+.page-footer {
+  text-align:center;
+  padding: 20px 0 0;
+}
+.footer-mark { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; }
+.footer-line  { width:44px; height:1px; background:var(--eucalyptus-pale); }
+.footer-initials { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:24px; color:var(--eucalyptus-light); opacity:.75; }
+.footer-text { font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:var(--text-light); }
+
+
+/* ═══════════════════════════════════════
+   1. HOME
+═══════════════════════════════════════ */
+#home {
+  background: linear-gradient(165deg, #f0f6f2 0%, var(--off-white) 60%);
+}
+.home-hero {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 36px;
+  position: relative;
+}
+.home-hero::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 10%, rgba(92,138,114,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 70% at 90% 90%, rgba(92,138,114,0.09) 0%, transparent 55%);
+  pointer-events:none;
+}
+.home-eyebrow {
+  font-size:10px; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--eucalyptus); margin-bottom:24px;
+}
+.home-names {
+  font-family:'Cormorant Garamond',serif;
+  font-size: clamp(60px, 13vw, 110px);
+  font-weight:300; font-style:italic;
+  line-height:1.0; color:var(--text-dark);
+  margin-bottom:6px;
+}
+.home-amp {
+  color:var(--eucalyptus-light);
+  font-size:1.1em;
+  display:block;
+  line-height:.9;
+}
+.home-divider { max-width:260px; margin: 28px auto; }
+.home-date {
+  font-family:'Cinzel',serif;
+  font-size:13px; letter-spacing:.22em;
+  color:var(--text-mid); margin-bottom:8px;
+}
+.home-venue {
+  font-size:12px; letter-spacing:.12em;
+  color:var(--text-light); margin-bottom:40px;
+}
+.home-cta-row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+.home-details {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:20px;
+  max-width:820px;
+  margin:80px auto 0;
+  padding:0 36px 80px;
+}
+.home-detail-card {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 2px 20px rgba(92,138,114,0.06);
+}
+.home-detail-card .icon { font-size:26px; margin-bottom:14px; }
+.home-detail-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px; font-weight:500;
+  color:var(--text-dark); margin-bottom:8px;
+}
+.home-detail-card p { font-size:12.5px; line-height:1.7; color:var(--text-mid); }
+.home-detail-card .detail-link {
+  display:inline-block; margin-top:12px;
+  font-size:9px; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--eucalyptus);
+  text-decoration:none; cursor:pointer;
+  border-bottom:1px solid var(--eucalyptus-pale);
+  padding-bottom:2px;
+  transition:color .2s, border-color .2s;
+}
+.home-detail-card .detail-link:hover { color:var(--eucalyptus-deep); border-color:var(--eucalyptus); }
+
+.home-countdown {
+  text-align:center;
+  padding:56px 36px;
+  background:var(--white);
+  border-top:1px solid var(--eucalyptus-mist);
+  border-bottom:1px solid var(--eucalyptus-mist);
+}
+.home-countdown h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px; font-weight:400;
+  letter-spacing:.3em; text-transform:uppercase;
+  color:var(--eucalyptus); margin-bottom:32px;
+}
+.countdown-row { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; }
+.countdown-unit { text-align:center; }
+.countdown-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,7vw,64px);
+  font-weight:300; line-height:1;
+  color:var(--eucalyptus-deep);
+  display:block;
+}
+.countdown-lbl {
+  font-size:9px; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--text-light);
+  margin-top:6px; display:block;
+}
+.countdown-sep {
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px; color:var(--eucalyptus-pale);
+  line-height:1; align-self:flex-start; padding-top:4px;
+}
+
+
+/* ═══════════════════════════════════════
+   2. RSVP
+═══════════════════════════════════════ */
+.rsvp-wrap {
+  max-width:600px;
+  margin:0 auto;
+  padding:64px 36px 96px;
+}
+.rsvp-header { text-align:center; margin-bottom:52px; }
+.rsvp-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,8vw,62px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:16px;
+}
+.rsvp-header p { font-size:13px; line-height:1.75; color:var(--text-mid); }
+.rsvp-header .deadline {
+  display:inline-block; margin-top:14px;
+  font-family:'Cinzel',serif; font-size:11px;
+  letter-spacing:.2em; color:var(--eucalyptus-deep);
+  background:var(--eucalyptus-mist);
+  padding:6px 16px; border-radius:2px;
+}
+
+.rsvp-form { display:flex; flex-direction:column; gap:22px; }
+
+.form-group { display:flex; flex-direction:column; gap:7px; }
+.form-group label {
+  font-size:9px; letter-spacing:.35em;
+  text-transform:uppercase; color:var(--eucalyptus);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%;
+  padding:13px 16px;
+  border:1px solid var(--eucalyptus-pale);
+  border-radius:4px;
+  background:var(--white);
+  font-family:'Jost',sans-serif;
+  font-size:14px; font-weight:300;
+  color:var(--text-dark);
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+  appearance:none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color:var(--eucalyptus-light);
+  box-shadow:0 0 0 3px rgba(92,138,114,0.1);
+}
+.form-group textarea { resize:vertical; min-height:90px; }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+.radio-group { display:flex; gap:14px; flex-wrap:wrap; }
+.radio-option {
+  display:flex; align-items:center; gap:9px;
+  padding:11px 20px;
+  border:1px solid var(--eucalyptus-pale);
+  border-radius:4px;
+  cursor:pointer;
+  font-size:13px; color:var(--text-mid);
+  transition:all .2s;
+  user-select:none;
+  background:var(--white);
+}
+.radio-option input[type=radio] { display:none; }
+.radio-option.selected {
+  border-color:var(--eucalyptus);
+  background:var(--eucalyptus-mist);
+  color:var(--eucalyptus-deep);
+}
+.radio-dot {
+  width:10px; height:10px; border-radius:50%;
+  border:1.5px solid var(--eucalyptus-pale);
+  flex-shrink:0; transition:all .2s;
+}
+.radio-option.selected .radio-dot {
+  background:var(--eucalyptus);
+  border-color:var(--eucalyptus);
+}
+
+.guest-fields { display:none; flex-direction:column; gap:22px; }
+.guest-fields.visible { display:flex; }
+
+.rsvp-submit-row { text-align:center; padding-top:8px; }
+.rsvp-submit-row .btn { width:100%; padding:16px; font-size:11px; letter-spacing:.35em; }
+
+/* success state */
+.rsvp-success {
+  display:none;
+  text-align:center;
+  padding:60px 20px;
+}
+.rsvp-success.visible { display:block; }
+.rsvp-success .success-icon { font-size:48px; margin-bottom:24px; }
+.rsvp-success h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px; font-style:italic; font-weight:300;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.rsvp-success p { font-size:14px; color:var(--text-mid); line-height:1.75; }
+
+.form-hint { font-size:11px; color:var(--text-light); font-style:italic; }
+
+/* ═══════════════════════════════════════
+   3. SCHEDULE
+═══════════════════════════════════════ */
+.schedule-header { text-align:center; margin-bottom:64px; }
+.schedule-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,7vw,60px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.schedule-header p { font-size:13px; line-height:1.75; color:var(--text-mid); }
+
+.timeline { position:relative; margin-bottom:64px; }
+.timeline::before {
+  content:'';
+  position:absolute; left:116px; top:0; bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom, transparent, var(--eucalyptus-pale) 8%, var(--eucalyptus-pale) 92%, transparent);
+}
+.tl-item {
+  display:flex; align-items:flex-start;
+  margin-bottom:44px;
+  animation:fadeUp .8s ease both;
+}
+.tl-item:nth-child(1){animation-delay:.1s}
+.tl-item:nth-child(2){animation-delay:.22s}
+.tl-item:nth-child(3){animation-delay:.34s}
+
+.tl-time { width:104px; padding-right:12px; text-align:right; flex-shrink:0; padding-top:3px; }
+.tl-time .t-main {
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px; color:var(--eucalyptus);
+  display:block; line-height:1;
+}
+.tl-time .t-sub {
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--text-light); display:block; margin-top:3px;
+}
+.tl-dot {
+  width:25px; flex-shrink:0;
+  display:flex; justify-content:center;
+  padding-top:7px; position:relative; z-index:1;
+}
+.dot {
+  width:9px; height:9px; border-radius:50%;
+  background:var(--white);
+  border:1.5px solid var(--eucalyptus-light);
+  box-shadow:0 0 0 3px rgba(92,138,114,0.12);
+}
+.tl-item.featured .dot {
+  background:var(--eucalyptus); border-color:var(--eucalyptus);
+  box-shadow:0 0 0 4px rgba(92,138,114,0.2);
+}
+.tl-content { flex:1; padding-left:22px; }
+.tl-tag {
+  display:inline-block; font-size:9px;
+  letter-spacing:.3em; text-transform:uppercase;
+  color:var(--white); background:var(--moss);
+  padding:3px 11px; border-radius:20px; margin-bottom:9px;
+}
+.tl-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:25px; font-weight:500;
+  line-height:1.2; margin-bottom:7px; color:var(--text-dark);
+}
+.tl-item.featured .tl-title { font-size:29px; color:var(--eucalyptus-deep); }
+.tl-desc { font-size:13px; line-height:1.75; color:var(--text-mid); margin-bottom:10px; }
+.tl-loc {
+  display:inline-flex; align-items:flex-start;
+  gap:6px; font-size:12px; color:var(--pewter); line-height:1.55;
+}
+.tl-loc svg { flex-shrink:0; margin-top:2px; }
+
+.schedule-cards { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+/* ═══════════════════════════════════════
+   4. WHERE TO STAY
+═══════════════════════════════════════ */
+.stay-header { text-align:center; margin-bottom:56px; }
+.stay-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,7vw,60px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.stay-header p { font-size:13px; line-height:1.75; color:var(--text-mid); max-width:520px; margin:0 auto; }
+
+.stay-featured {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:8px;
+  padding:36px 32px;
+  position:relative; overflow:hidden;
+  box-shadow:0 4px 32px rgba(92,138,114,0.09);
+  margin-bottom:32px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:start;
+}
+.stay-featured::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(to right, var(--eucalyptus-pale), var(--eucalyptus), var(--eucalyptus-pale));
+}
+.stay-badge {
+  display:inline-block; font-size:9px;
+  letter-spacing:.35em; text-transform:uppercase;
+  color:var(--white); background:var(--eucalyptus);
+  padding:4px 12px; border-radius:20px; margin-bottom:12px;
+}
+.stay-featured h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px; font-weight:500;
+  color:var(--text-dark); margin-bottom:8px;
+}
+.stay-featured .stay-address {
+  font-size:13px; color:var(--text-mid); line-height:1.65; margin-bottom:14px;
+}
+.stay-featured .stay-perks {
+  list-style:none; display:flex; flex-direction:column; gap:7px; margin-bottom:20px;
+}
+.stay-featured .stay-perks li {
+  font-size:13px; color:var(--text-mid);
+  display:flex; align-items:center; gap:9px;
+}
+.stay-featured .stay-perks li::before {
+  content:''; width:5px; height:5px; border-radius:50%;
+  background:var(--eucalyptus-light); flex-shrink:0;
+}
+.stay-price-tag {
+  text-align:right; padding-top:8px;
+}
+.stay-price-tag .label { font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--text-light); display:block; margin-bottom:4px; }
+.stay-price-tag .price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:14px; color:var(--eucalyptus-deep); font-style:italic;
+}
+
+.stay-alt-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:32px; }
+.stay-alt-card {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:24px 22px;
+  box-shadow:0 2px 16px rgba(92,138,114,0.06);
+}
+.stay-alt-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px; font-weight:500;
+  color:var(--text-dark); margin-bottom:6px;
+}
+.stay-alt-card .stay-dist {
+  font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--eucalyptus); margin-bottom:10px; display:block;
+}
+.stay-alt-card p { font-size:12.5px; color:var(--text-mid); line-height:1.7; }
+
+.stay-note {
+  background:var(--eucalyptus-mist);
+  border:1px solid var(--eucalyptus-pale);
+  border-radius:6px; padding:20px 24px;
+  font-size:13px; line-height:1.75; color:var(--text-mid);
+  display:flex; gap:14px; align-items:flex-start;
+}
+.stay-note-icon { font-size:20px; flex-shrink:0; margin-top:1px; }
+
+
+/* ═══════════════════════════════════════
+   5. REGISTRY
+═══════════════════════════════════════ */
+.registry-header { text-align:center; margin-bottom:56px; }
+.registry-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,7vw,60px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.registry-header p { font-size:13px; line-height:1.75; color:var(--text-mid); max-width:520px; margin:0 auto; }
+
+.registry-note {
+  background:var(--eucalyptus-mist);
+  border-left:3px solid var(--eucalyptus);
+  border-radius:0 4px 4px 0;
+  padding:18px 22px;
+  font-size:13px; line-height:1.75; color:var(--text-mid);
+  margin-bottom:36px;
+  font-style:italic;
+}
+
+.registry-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:40px; }
+.registry-card {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:32px 22px;
+  text-align:center;
+  box-shadow:0 2px 20px rgba(92,138,114,0.06);
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+  transition:transform .2s, box-shadow .2s;
+}
+.registry-card:hover { transform:translateY(-3px); box-shadow:0 6px 32px rgba(92,138,114,0.12); }
+.registry-card .reg-logo { font-size:32px; }
+.registry-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px; font-weight:500; color:var(--text-dark);
+}
+.registry-card p { font-size:12.5px; color:var(--text-mid); line-height:1.7; }
+.registry-card .btn { margin-top:6px; font-size:9px; padding:10px 22px; }
+
+.registry-cash {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:32px;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:28px; align-items:center;
+  box-shadow:0 2px 20px rgba(92,138,114,0.06);
+}
+.registry-cash h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px; font-weight:500; color:var(--text-dark); margin-bottom:10px;
+}
+.registry-cash p { font-size:13px; color:var(--text-mid); line-height:1.75; }
+.registry-cash-visual {
+  display:flex; justify-content:center; align-items:center;
+  font-size:56px; opacity:.6;
+}
+
+
+/* ═══════════════════════════════════════
+   6. TRAVEL
+═══════════════════════════════════════ */
+.travel-header { text-align:center; margin-bottom:56px; }
+.travel-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,7vw,60px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.travel-header p { font-size:13px; line-height:1.75; color:var(--text-mid); max-width:520px; margin:0 auto; }
+
+.travel-venues { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:36px; }
+.venue-card {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:28px 24px;
+  box-shadow:0 2px 20px rgba(92,138,114,0.06);
+  position:relative; overflow:hidden;
+}
+.venue-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(to right, var(--eucalyptus-pale), var(--eucalyptus), var(--eucalyptus-pale));
+}
+.venue-card .venue-type {
+  font-size:9px; letter-spacing:.35em; text-transform:uppercase;
+  color:var(--eucalyptus); margin-bottom:8px; display:block;
+}
+.venue-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px; font-weight:500; color:var(--text-dark); margin-bottom:8px;
+}
+.venue-card address {
+  font-style:normal; font-size:12.5px;
+  color:var(--text-mid); line-height:1.7; margin-bottom:14px;
+}
+
+.travel-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:36px; }
+.travel-card {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:26px 22px;
+  box-shadow:0 2px 16px rgba(92,138,114,0.06);
+}
+.travel-card .t-icon { font-size:28px; margin-bottom:12px; display:block; }
+.travel-card h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px; font-weight:500; color:var(--text-dark); margin-bottom:10px;
+}
+.travel-card p { font-size:13px; color:var(--text-mid); line-height:1.75; }
+.travel-card ul { padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+.travel-card ul li {
+  font-size:12.5px; color:var(--text-mid);
+  padding-left:16px; position:relative;
+}
+.travel-card ul li::before {
+  content:''; position:absolute; left:0; top:7px;
+  width:5px; height:5px; border-radius:50%;
+  background:var(--eucalyptus-light);
+}
+
+.travel-tip {
+  background:var(--eucalyptus-mist);
+  border:1px solid var(--eucalyptus-pale);
+  border-radius:6px; padding:20px 24px;
+  font-size:13px; line-height:1.75; color:var(--text-mid);
+  display:flex; gap:14px; align-items:flex-start;
+}
+
+
+/* ═══════════════════════════════════════
+   7. Q&A
+═══════════════════════════════════════ */
+.qa-header { text-align:center; margin-bottom:56px; }
+.qa-header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,7vw,60px);
+  font-weight:300; font-style:italic;
+  color:var(--text-dark); margin-bottom:14px;
+}
+.qa-header p { font-size:13px; line-height:1.75; color:var(--text-mid); max-width:520px; margin:0 auto; }
+
+.qa-list { display:flex; flex-direction:column; gap:4px; margin-bottom:48px; }
+.qa-item {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 1px 12px rgba(92,138,114,0.05);
+}
+.qa-q {
+  width:100%; text-align:left;
+  padding:20px 24px;
+  background:none; border:none; cursor:pointer;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px; font-weight:500;
+  color:var(--text-dark);
+  transition:color .2s;
+}
+.qa-q:hover { color:var(--eucalyptus-deep); }
+.qa-chevron {
+  font-size:13px; color:var(--eucalyptus-light);
+  transition:transform .3s; flex-shrink:0;
+}
+.qa-item.open .qa-chevron { transform:rotate(180deg); }
+.qa-a {
+  max-height:0; overflow:hidden;
+  transition:max-height .35s ease, padding .35s ease;
+  padding:0 24px;
+  font-size:13.5px; line-height:1.8; color:var(--text-mid);
+}
+.qa-item.open .qa-a {
+  max-height:300px;
+  padding:0 24px 20px;
+}
+
+.qa-contact {
+  background:var(--white);
+  border:1px solid var(--eucalyptus-mist);
+  border-radius:6px; padding:36px 32px;
+  text-align:center;
+  box-shadow:0 2px 20px rgba(92,138,114,0.06);
+}
+.qa-contact h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px; font-weight:400; font-style:italic;
+  color:var(--text-dark); margin-bottom:12px;
+}
+.qa-contact p { font-size:13px; color:var(--text-mid); line-height:1.75; margin-bottom:20px; }
+.qa-contacts-row { display:flex; justify-content:center; gap:32px; flex-wrap:wrap; }
+.qa-contact-person { text-align:center; }
+.qa-contact-person .name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px; font-style:italic;
+  color:var(--text-dark); display:block; margin-bottom:4px;
+}
+.qa-contact-person .role { font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--eucalyptus); display:block; margin-bottom:6px; }
+.qa-contact-person a { font-size:13px; color:var(--text-mid); text-decoration:none; }
+.qa-contact-person a:hover { color:var(--eucalyptus); }
+
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 700px) {
+  .nav-links { display:none; flex-direction:column; position:fixed; top:var(--nav-h); left:0; right:0; background:var(--white); padding:24px 32px 32px; gap:18px; border-bottom:1px solid var(--eucalyptus-mist); box-shadow:0 8px 32px rgba(0,0,0,0.07); }
+  .nav-links.open { display:flex; }
+  .nav-toggle { display:flex; }
+  .home-details { grid-template-columns:1fr; }
+  .schedule-cards, .travel-venues, .travel-grid, .stay-alt-grid { grid-template-columns:1fr; }
+  .registry-grid { grid-template-columns:1fr 1fr; }
+  .registry-cash { grid-template-columns:1fr; }
+  .stay-featured { grid-template-columns:1fr; }
+  .form-row { grid-template-columns:1fr; }
+  .timeline::before { left:80px; }
+  .tl-time { width:68px; }
+  .tl-time .t-main { font-size:16px; }
+  .qa-contacts-row { flex-direction:column; align-items:center; gap:20px; }
+}
+@media (max-width:480px) {
+  .registry-grid { grid-template-columns:1fr; }
+  .inner, .rsvp-wrap { padding:40px 20px 72px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <a class="nav-logo" onclick="showPage('home')">Jeanine <span>&</span> Johnny</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('rsvp')" id="nav-rsvp" class="nav-rsvp-btn">RSVP</a></li>
+    <li><a onclick="showPage('schedule')" id="nav-schedule">Schedule</a></li>
+    <li><a onclick="showPage('stay')" id="nav-stay">Where to Stay</a></li>
+    <li><a onclick="showPage('registry')" id="nav-registry">Registry</a></li>
+    <li><a onclick="showPage('travel')" id="nav-travel">Travel</a></li>
+    <li><a onclick="showPage('qa')" id="nav-qa">Q &amp; A</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     1. HOME
+═══════════════════════════════════════ -->
+<section class="page-section active" id="home">
+
+  <div class="home-hero">
+    <p class="home-eyebrow anim">Together with their families</p>
+    <div class="home-names anim anim-d1">
+      Jeanine<span class="home-amp">&</span>Johnny
+    </div>
+    <div class="ornament-divider home-divider anim anim-d2"><span class="orn">✦</span></div>
+    <p class="home-date anim anim-d2">Sunday, July 19th, 2026</p>
+    <p class="home-venue anim anim-d3">Russo's on the Bay &nbsp;·&nbsp; Queens, New York</p>
+    <div class="home-cta-row anim anim-d4">
+      <button class="btn" onclick="showPage('rsvp')">Kindly Reply</button>
+      <button class="btn btn-outline" onclick="showPage('schedule')">View Schedule</button>
+    </div>
+  </div>
+
+  <div class="home-countdown">
+    <h2>Counting Down</h2>
+    <div class="countdown-row">
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-days">—</span>
+        <span class="countdown-lbl">Days</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-hours">—</span>
+        <span class="countdown-lbl">Hours</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-mins">—</span>
+        <span class="countdown-lbl">Minutes</span>
+      </div>
+      <span class="countdown-sep">·</span>
+      <div class="countdown-unit">
+        <span class="countdown-num" id="cd-secs">—</span>
+        <span class="countdown-lbl">Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-details">
+    <div class="home-detail-card anim anim-d1">
+      <div class="icon">💍</div>
+      <h3>The Reception</h3>
+      <p>Cocktail hour at 5:30 PM followed by dinner and dancing at Russo's on the Bay, Queens.</p>
+      <a class="detail-link" onclick="showPage('schedule')">Full Schedule →</a>
+    </div>
+    <div class="home-detail-card anim anim-d2">
+      <div class="icon">🏨</div>
+      <h3>Where to Stay</h3>
+      <p>We've reserved a room block at the JFK Regency Hyatt Hotel for a special discounted rate.</p>
+      <a class="detail-link" onclick="showPage('stay')">Hotel Info →</a>
+    </div>
+    <div class="home-detail-card anim anim-d3">
+      <div class="icon">✈️</div>
+      <h3>Getting There</h3>
+      <p>Traveling from out of town? Find airport info, directions, and transportation tips.</p>
+      <a class="detail-link" onclick="showPage('travel')">Travel Details →</a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     2. RSVP
+═══════════════════════════════════════ -->
+<section class="page-section" id="rsvp">
+<div class="rsvp-wrap">
+
+  <div class="rsvp-header anim">
+    <h1>Kindly Reply</h1>
+    <p>We would be honored to have you celebrate with us. Please fill out the form below for each member of your party.</p>
+    <span class="deadline">Kindly reply by June 1st, 2026</span>
+  </div>
+
+  <div id="rsvpFormWrap">
+  <form class="rsvp-form" onsubmit="submitRSVP(event)">
+
+    <div class="form-row">
+      <div class="form-group anim anim-d1">
+        <label>First Name</label>
+        <input type="text" id="firstName" placeholder="First name" required>
+      </div>
+      <div class="form-group anim anim-d1">
+        <label>Last Name</label>
+        <input type="text" id="lastName" placeholder="Last name" required>
+      </div>
+    </div>
+
+    <div class="form-group anim anim-d2">
+      <label>Email Address</label>
+      <input type="email" id="email" placeholder="your@email.com" required>
+    </div>
+
+    <div class="form-group anim anim-d2">
+      <label>Will you be attending?</label>
+      <div class="radio-group">
+        <label class="radio-option" id="opt-yes" onclick="selectAttending('yes')">
+          <input type="radio" name="attending" value="yes">
+          <span class="radio-dot"></span>
+          Joyfully Accepts
+        </label>
+        <label class="radio-option" id="opt-no" onclick="selectAttending('no')">
+          <input type="radio" name="attending" value="no">
+          <span class="radio-dot"></span>
+          Regretfully Declines
+        </label>
+      </div>
+    </div>
+
+    <div class="guest-fields" id="guestFields">
+
+      <div class="form-group anim">
+        <label>Number of Guests (including yourself)</label>
+        <select id="guestCount" onchange="updateMealFields()">
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+
+      <div id="mealSelections"></div>
+
+      <div class="form-group anim">
+        <label>Dietary Restrictions or Allergies</label>
+        <textarea id="dietary" placeholder="Please let us know of any dietary needs…"></textarea>
+      </div>
+
+      <div class="form-group anim">
+        <label>Song Request 🎵</label>
+        <input type="text" id="song" placeholder="What song will get you on the dance floor?">
+        <span class="form-hint">Help us build the perfect playlist!</span>
+      </div>
+
+    </div>
+
+    <div class="form-group anim anim-d4">
+      <label>A Note for the Couple <span style="opacity:.5">(optional)</span></label>
+      <textarea id="note" placeholder="Share a wish, memory, or kind words…"></textarea>
+    </div>
+
+    <div class="rsvp-submit-row anim anim-d5">
+      <button type="submit" class="btn" id="submitBtn">Send My RSVP</button>
+    </div>
+
+  </form>
+  </div>
+
+  <div class="rsvp-success" id="rsvpSuccess">
+    <div class="success-icon">🌿</div>
+    <h2>Thank you, <span id="successName"></span>!</h2>
+    <p id="successMsg"></p>
+    <br><br>
+    <button class="btn btn-outline" onclick="resetRSVP()">Submit Another RSVP</button>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     3. SCHEDULE
+═══════════════════════════════════════ -->
+<section class="page-section" id="schedule">
+<div class="inner">
+
+  <div class="schedule-header anim">
+    <h1>Day-of Schedule</h1>
+    <p>Sunday, July 19th, 2026 &nbsp;·&nbsp; Queens, New York</p>
+  </div>
+
+  <p class="sec-label">The Celebration</p>
+
+  <div class="timeline">
+
+    <div class="tl-item featured">
+      <div class="tl-time">
+        <span class="t-main">5:30</span>
+        <span class="t-sub">evening</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag">Reception Begins</span>
+        <div class="tl-title">Cocktail Hour</div>
+        <p class="tl-desc">Join us for welcome cocktails, passed hors d'oeuvres, and the start of the celebration.</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">
+        <span class="t-main">To follow</span>
+        <span class="t-sub">&nbsp;</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag" style="background:var(--willow);color:var(--text-dark)">Dinner</span>
+        <div class="tl-title">Dinner</div>
+        <p class="tl-desc">A seated dinner celebrating Jeanine and Johnny with the people they love most.</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">
+        <span class="t-main">All night</span>
+        <span class="t-sub">&nbsp;</span>
+      </div>
+      <div class="tl-dot"><div class="dot"></div></div>
+      <div class="tl-content">
+        <span class="tl-tag" style="background:var(--eucalyptus-pale);color:var(--text-dark)">Dancing</span>
+        <div class="tl-title">Dancing</div>
+        <p class="tl-desc">Hit the dance floor and celebrate the night away. We can't wait to party with you!</p>
+        <span class="tl-loc">
+          <svg width="11" height="14" viewBox="0 0 11 14" fill="none"><path d="M5.5 0C3.01 0 1 2.01 1 4.5c0 3.38 4.5 9 4.5 9s4.5-5.62 4.5-9C10 2.01 7.99 0 5.5 0zm0 6.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5z" fill="currentColor"/></svg>
+          Russo's on the Bay &nbsp;·&nbsp; 162-45 Cross Bay Blvd, Queens, NY 11414
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="sec-label">Good to Know</p>
+  <div class="schedule-cards">
+    <div class="card">
+      <span class="card-icon">🔞</span>
+      <div class="card-title">Adults Only</div>
+      <p class="card-text">Kindly note this will be an adults-only reception. We appreciate your understanding and hope you can still join us!</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📅</span>
+      <div class="card-title">RSVP Deadline</div>
+      <p class="card-text">Please reply by <strong>June 1st, 2026</strong> so we can make sure everything is perfect for the big day.</p>
+      <br>
+      <button class="btn" onclick="showPage('rsvp')" style="font-size:9px;padding:10px 22px;">RSVP Now</button>
+    </div>
+  </div>
+
+  <div style="margin-top:48px;">
+    <div class="page-footer">
+      <div class="footer-mark"><div class="footer-line"></div><span class="footer-initials">J & J</span><div class="footer-line"></div></div>
+      <p class="footer-text">July 19, 2026 &nbsp;·&nbsp; Queens, New York</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     4. WHERE TO STAY
+═══════════════════════════════════════ -->
+<section class="page-section" id="stay">
+<div class="inner">
+
+  <div class="stay-header anim">
+    <h1>Where to Stay</h1>
+    <p>We want to make sure our out-of-town guests are comfortable and close to the action.</p>
+  </div>
+
+  <p class="sec-label">Our Room Block</p>
+
+  <div class="stay-featured anim anim-d1">
+    <div>
+      <span class="stay-badge">Official Hotel Block</span>
+      <h2>JFK Regency Hyatt Hotel</h2>
+      <p class="stay-address">110-00 Rockaway Blvd<br>Jamaica, New York 11420</p>
+      <ul class="stay-perks">
+        <li>Special discounted rate exclusively for our guests</li>
+        <li>Close proximity to the reception venue</li>
+        <li>Easy access from JFK Airport</li>
+        <li>Complimentary shuttle service available</li>
+      </ul>
+      <button class="btn" onclick="alert('Please scan the QR code on your invitation to access the custom booking link!')">Book Your Room</button>
+      <p class="card-note" style="margin-top:12px;">Scan the QR code on your invitation for our custom booking link and discounted rate.</p>
+    </div>
+    <div class="stay-price-tag">
+      <span class="label">Group Rate</span>
+      <span class="price">Available for<br>wedding guests</span>
+    </div>
+  </div>
+
+  <p class="sec-label">Other Nearby Options</p>
+
+  <div class="stay-alt-grid anim anim-d2">
+    <div class="stay-alt-card">
+      <h3>Hilton Garden Inn JFK</h3>
+      <span class="stay-dist">~5 min from venue</span>
+      <p>Comfortable rooms with shuttle service to JFK Airport. A solid choice for guests flying in.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>Hampton Inn Queens</h3>
+      <span class="stay-dist">~10 min from venue</span>
+      <p>Affordable and reliable, with easy access to public transit and the Cross Bay corridor.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>TWA Hotel at JFK</h3>
+      <span class="stay-dist">~10 min from venue</span>
+      <p>A stunning mid-century landmark right inside JFK Airport — unforgettable for the design lovers in your group.</p>
+    </div>
+    <div class="stay-alt-card">
+      <h3>Airbnb in Howard Beach</h3>
+      <span class="stay-dist">~5 min from venue</span>
+      <p>Search for rentals in Howard Beach or Broad Channel for a more local and flexible option.</p>
+    </div>
+  </div>
+
+  <div class="stay-note anim anim-d3">
+    <span class="stay-note-icon">💡</span>
+    <p>We recommend booking early — July weekends fill up fast in New York. If you have questions about accommodations, don't hesitate to reach out!</p>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     5. REGISTRY
+═══════════════════════════════════════ -->
+<section class="page-section" id="registry">
+<div class="inner">
+
+  <div class="registry-header anim">
+    <h1>Registry</h1>
+    <p>Your presence at our wedding is the greatest gift of all. For those who wish to give, we've created a few options below.</p>
+  </div>
+
+  <div class="registry-note anim anim-d1">
+    "The most important thing to us is celebrating with you. Please don't feel obligated — your company means everything."
+  </div>
+
+  <p class="sec-label">Our Registries</p>
+
+  <div class="registry-grid anim anim-d2">
+    <div class="registry-card">
+      <span class="reg-logo">🏠</span>
+      <h3>Crate & Barrel</h3>
+      <p>Kitchen, dining, and home essentials to start our life together.</p>
+      <a class="btn" href="#" onclick="alert('Registry link coming soon!')">View Registry</a>
+    </div>
+    <div class="registry-card">
+      <span class="reg-logo">💎</span>
+      <h3>Williams Sonoma</h3>
+      <p>Cookware, appliances, and everything we need for our home kitchen.</p>
+      <a class="btn" href="#" onclick="alert('Registry link coming soon!')">View Registry</a>
+    </div>
+    <div class="registry-card">
+      <span class="reg-logo">🎁</span>
+      <h3>Amazon</h3>
+      <p>A mix of everyday essentials and special items for our new home.</p>
+      <a class="btn" href="#" onclick="alert('Registry link coming soon!')">View Registry</a>
+    </div>
+  </div>
+
+  <p class="sec-label">Honeymoon Fund</p>
+
+  <div class="registry-cash anim anim-d3">
+    <div>
+      <h3>Contribute to Our Honeymoon</h3>
+      <p>We're dreaming of a special trip to celebrate our marriage. If you'd like to contribute to our honeymoon fund, we would be so grateful. Every contribution, big or small, helps make our dream trip a reality.</p>
+      <br>
+      <button class="btn" onclick="alert('Honeymoon fund link coming soon!')">Contribute</button>
+    </div>
+    <div class="registry-cash-visual">🌍</div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     6. TRAVEL
+═══════════════════════════════════════ -->
+<section class="page-section" id="travel">
+<div class="inner">
+
+  <div class="travel-header anim">
+    <h1>Getting There</h1>
+    <p>Everything you need to find your way to Queens, New York for our big day.</p>
+  </div>
+
+  <p class="sec-label">Our Venues</p>
+
+  <div class="travel-venues anim anim-d1">
+    <div class="venue-card">
+      <span class="venue-type">Reception</span>
+      <h3>Russo's on the Bay</h3>
+      <address>162-45 Cross Bay Boulevard<br>Howard Beach, Queens, NY 11414</address>
+      <a class="btn btn-outline" style="font-size:9px;padding:10px 22px;" href="https://maps.google.com/?q=Russo's+on+the+Bay+Queens+NY" target="_blank">Get Directions</a>
+    </div>
+    <div class="venue-card">
+      <span class="venue-type">Hotel Block</span>
+      <h3>JFK Regency Hyatt</h3>
+      <address>110-00 Rockaway Boulevard<br>Jamaica, New York 11420</address>
+      <a class="btn btn-outline" style="font-size:9px;padding:10px 22px;" href="https://maps.google.com/?q=Hyatt+Regency+JFK+Jamaica+NY" target="_blank">Get Directions</a>
+    </div>
+  </div>
+
+  <p class="sec-label">How to Get Here</p>
+
+  <div class="travel-grid anim anim-d2">
+    <div class="travel-card">
+      <span class="t-icon">✈️</span>
+      <h3>By Air</h3>
+      <p>The closest airports are:</p>
+      <ul>
+        <li><strong>JFK</strong> — 10 min from venue, ideal</li>
+        <li><strong>LGA (LaGuardia)</strong> — ~30 min by car</li>
+        <li><strong>EWR (Newark)</strong> — ~45 min by car</li>
+      </ul>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚗</span>
+      <h3>By Car</h3>
+      <p>Russo's on the Bay is easily accessible via the Belt Parkway (Exit 17 – Cross Bay Blvd). Ample parking is available at the venue.</p>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚇</span>
+      <h3>By Subway/AirTrain</h3>
+      <p>Take the A train to Howard Beach–JFK Airport station. From there, it's a short cab or rideshare to the venue. The AirTrain also connects JFK to the subway.</p>
+    </div>
+    <div class="travel-card">
+      <span class="t-icon">🚖</span>
+      <h3>Rideshare</h3>
+      <p>Uber and Lyft are widely available throughout Queens and from all major airports. We recommend pre-booking for Saturday night reliability.</p>
+    </div>
+  </div>
+
+  <div class="travel-tip anim anim-d3">
+    <span style="font-size:20px;flex-shrink:0">🗽</span>
+    <p>If you're visiting New York for the first time, consider arriving a day or two early to explore the city! Let us know if you'd like any local recommendations — we'd love to help you make the most of your trip.</p>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     7. Q&A
+═══════════════════════════════════════ -->
+<section class="page-section" id="qa">
+<div class="inner">
+
+  <div class="qa-header anim">
+    <h1>Questions &amp; Answers</h1>
+    <p>Everything you need to know before the big day. Still have questions? Reach out — we're happy to help!</p>
+  </div>
+
+  <p class="sec-label">Frequently Asked</p>
+
+  <div class="qa-list anim anim-d1">
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What is the dress code?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Cocktail attire. Think elegant and celebratory — suits, dresses, or dressy separates are all perfect. We encourage you to dress up and celebrate with us!</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Is this an adults-only event?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Yes, this will be an adults-only reception. While we love your little ones, we ask that guests make childcare arrangements for the evening so everyone can fully enjoy the celebration.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Can I bring a plus-one?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Due to venue capacity, we are only able to accommodate guests who are listed on the invitation. If you have questions about your invitation, please reach out to us directly.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What time should I arrive?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Cocktail hour begins at 5:30 PM. We suggest arriving a few minutes early to park and get settled before the fun begins!</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Is there parking at the venue?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Yes! Russo's on the Bay has ample parking on-site. Valet parking may also be available — we'll update this page with details closer to the date.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Can I take photos during the reception?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Absolutely! We would love for you to capture memories and share them with us. We'll be setting up a way for guests to share photos after the wedding — stay tuned for details.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        Will there be a shuttle between the hotel and venue?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">We're looking into shuttle arrangements between the Hyatt and Russo's on the Bay. We'll update this page as soon as details are confirmed. In the meantime, Uber and Lyft are very reliable in the area.</div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" onclick="toggleQA(this)">
+        What if I have dietary restrictions?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">Please note any dietary restrictions or allergies in your RSVP form and we will do our best to accommodate you. Don't hesitate to reach out if you have specific concerns.</div>
+    </div>
+
+  </div>
+
+  <div class="qa-contact anim anim-d2">
+    <h3>Still have questions?</h3>
+    <p>Don't hesitate to reach out — we're happy to help with anything you need.</p>
+    <div class="qa-contacts-row">
+      <div class="qa-contact-person">
+        <span class="name">Jeanine</span>
+        <span class="role">Bride</span>
+        <a href="mailto:jeanine@email.com">jeanine@email.com</a>
+      </div>
+      <div class="qa-contact-person">
+        <span class="name">Johnny</span>
+        <span class="role">Groom</span>
+        <a href="mailto:johnny@email.com">johnny@email.com</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ */
+<script>
+
+// ── Page navigation ──
+function showPage(id) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // close mobile nav
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── Countdown ──
+function updateCountdown() {
+  const wedding = new Date('2026-07-19T17:30:00');
+  const now = new Date();
+  const diff = wedding - now;
+  if (diff <= 0) {
+    ['days','hours','mins','secs'].forEach(u => document.getElementById('cd-'+u).textContent = '0');
+    return;
+  }
+  const days  = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins  = Math.floor((diff % 3600000) / 60000);
+  const secs  = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent  = days;
+  document.getElementById('cd-hours').textContent = hours;
+  document.getElementById('cd-mins').textContent  = mins;
+  document.getElementById('cd-secs').textContent  = secs;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ── RSVP: attending toggle ──
+let attendingChoice = null;
+function selectAttending(val) {
+  attendingChoice = val;
+  document.getElementById('opt-yes').classList.toggle('selected', val === 'yes');
+  document.getElementById('opt-no').classList.toggle('selected',  val === 'no');
+  const gf = document.getElementById('guestFields');
+  if (val === 'yes') { gf.classList.add('visible'); updateMealFields(); }
+  else { gf.classList.remove('visible'); }
+}
+
+// ── RSVP: dynamic meal selections ──
+const mealOptions = ['Chicken', 'Fish', 'Vegetarian'];
+function updateMealFields() {
+  const count = parseInt(document.getElementById('guestCount').value) || 1;
+  const wrap = document.getElementById('mealSelections');
+  wrap.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const label = i === 0 ? 'Your Meal Preference' : `Guest ${i + 1} Meal Preference`;
+    const nameLabel = i === 0 ? '' : `<div class="form-group" style="margin-bottom:6px"><label>Guest ${i+1} Name</label><input type="text" placeholder="Guest name" class="guest-name-field"></div>`;
+    wrap.innerHTML += `
+      ${nameLabel}
+      <div class="form-group" style="margin-bottom:16px">
+        <label>${label}</label>
+        <select class="meal-select">
+          ${mealOptions.map(o => `<option value="${o}">${o}</option>`).join('')}
+        </select>
+      </div>`;
+  }
+}
+
+// ── RSVP: submit ──
+function submitRSVP(e) {
+  e.preventDefault();
+  if (!attendingChoice) { alert('Please select whether you will be attending.'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const note      = document.getElementById('note').value.trim();
+  const song      = attendingChoice === 'yes' ? document.getElementById('song').value.trim() : '';
+  const dietary   = attendingChoice === 'yes' ? document.getElementById('dietary').value.trim() : '';
+  const guestCount = attendingChoice === 'yes' ? parseInt(document.getElementById('guestCount').value) : 0;
+
+  // Collect meals
+  const meals = [];
+  document.querySelectorAll('.meal-select').forEach(s => meals.push(s.value));
+  const guestNames = [];
+  document.querySelectorAll('.guest-name-field').forEach(f => guestNames.push(f.value.trim()));
+
+  // Save to storage
+  try {
+    const rsvpData = {
+      id: Date.now(),
+      firstName, lastName, email,
+      attending: attendingChoice,
+      guestCount, meals, guestNames,
+      dietary, song, note,
+      submittedAt: new Date().toISOString()
+    };
+    // Store in sessionStorage as fallback (Joy websites can't use persistent API storage)
+    const existing = JSON.parse(sessionStorage.getItem('rsvps') || '[]');
+    existing.push(rsvpData);
+    sessionStorage.setItem('rsvps', JSON.stringify(existing));
+  } catch(err) { console.log('Storage note:', err); }
+
+  // Show success after brief delay
+  setTimeout(() => {
+    document.getElementById('rsvpFormWrap').style.display = 'none';
+    const success = document.getElementById('rsvpSuccess');
+    success.classList.add('visible');
+    document.getElementById('successName').textContent = firstName;
+    if (attendingChoice === 'yes') {
+      document.getElementById('successMsg').textContent =
+        `We're so excited to celebrate with you${guestCount > 1 ? ' and your guests' : ''}! We'll be in touch as the date gets closer. We can't wait to see you on July 19th! 🌿`;
+    } else {
+      document.getElementById('successMsg').textContent =
+        `We're so sorry you won't be able to make it, but we truly appreciate you letting us know. We'll be thinking of you and hope to celebrate together another time!`;
+    }
+    btn.textContent = 'Send My RSVP';
+    btn.disabled = false;
+  }, 800);
+}
+
+function resetRSVP() {
+  document.getElementById('rsvpFormWrap').style.display = '';
+  document.getElementById('rsvpSuccess').classList.remove('visible');
+  document.querySelector('.rsvp-form').reset();
+  attendingChoice = null;
+  document.getElementById('opt-yes').classList.remove('selected');
+  document.getElementById('opt-no').classList.remove('selected');
+  document.getElementById('guestFields').classList.remove('visible');
+  document.getElementById('mealSelections').innerHTML = '';
+}
+
+// ── Q&A accordion ──
+function toggleQA(btn) {
+  const item = btn.closest('.qa-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.qa-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+</script>
+</body>
+</html>
