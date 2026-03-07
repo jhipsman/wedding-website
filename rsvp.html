@@ -89,6 +89,68 @@
 }
 .lookup-error.visible { display: block; }
 
+/* Confirm card */
+.confirm-card {
+  display: none;
+  background: var(--white);
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 6px;
+  padding: 24px 28px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.confirm-card.visible { display: block; }
+.confirm-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: .2em;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.confirm-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+.confirm-btns {
+  display: flex;
+  gap: 10px;
+}
+.confirm-btns .btn-yes {
+  flex: 1;
+  padding: 12px;
+  background: var(--eucalyptus);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s;
+}
+.confirm-btns .btn-yes:hover { background: var(--eucalyptus-deep); }
+.confirm-btns .btn-no {
+  flex: 1;
+  padding: 12px;
+  background: transparent;
+  color: var(--text-mid);
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+}
+.confirm-btns .btn-no:hover { border-color: var(--eucalyptus-light); color: var(--eucalyptus-deep); }
+
+
 /* Welcome banner */
 .welcome-banner {
   display: none;
@@ -141,6 +203,16 @@
       <input type="text" id="nameInput" placeholder="Enter your full name…"
              onkeydown="if(event.key==='Enter'){searchGuest()}">
       <button onclick="searchGuest()">Find Me</button>
+    </div>
+
+    <!-- Confirm card -->
+    <div class="confirm-card" id="confirmCard">
+      <div class="confirm-label">Is this you?</div>
+      <div class="confirm-name" id="confirmName"></div>
+      <div class="confirm-btns">
+        <button class="btn-yes" onclick="confirmGuest()">Yes, that's me</button>
+        <button class="btn-no" onclick="resetSearch()">Not me, search again</button>
+      </div>
     </div>
 
     <!-- Not found message -->
@@ -471,38 +543,50 @@ function findMatches(query) {
 // UI LOGIC
 // ══════════════════════════════════════════
 
+let pendingGuest = null;
+
 function searchGuest() {
   const query = document.getElementById('nameInput').value.trim();
   if (!query) return;
+  document.getElementById('lookupError').classList.remove('visible');
+  document.getElementById('confirmCard').classList.remove('visible');
   const matches = findMatches(query);
   if (matches.length === 0) {
     document.getElementById('lookupError').classList.add('visible');
   } else {
-    selectGuest(matches[0].guest.display);
+    pendingGuest = matches[0].guest.display;
+    document.getElementById('confirmName').textContent = matches[0].guest.display;
+    document.getElementById('confirmCard').classList.add('visible');
   }
 }
 
-function selectGuest(displayName) {
+function confirmGuest() {
+  if (!pendingGuest) return;
+  document.getElementById('confirmCard').classList.remove('visible');
   document.getElementById('lookupError').classList.remove('visible');
-  document.getElementById('matchedGuestField').value = displayName;
+  document.getElementById('matchedGuestField').value = pendingGuest;
 
-  // Extract first name for welcome message
-  const clean = displayName.replace(/^(Dr\. & Mrs\.|Mr\. & Mrs\.|Mrs\.|Mr\.|Ms\.|Dr\.|The )/,'').trim();
+  const clean = pendingGuest.replace(/^(Dr\. & Mrs\.|Mr\. & Mrs\.|Mrs\.|Mr\.|Ms\.|Dr\.|The )/,'').trim();
   const firstName = clean.split(/\s+/)[0];
 
   document.getElementById('welcomeMsg').textContent = `Welcome, ${firstName}!`;
   document.getElementById('formFirstName').value = firstName;
 
-  // Pre-fill last name if parseable
   const nameParts = clean.split(/\s+/);
   if (nameParts.length >= 2 && !['&','Family','and'].includes(nameParts[1])) {
     document.getElementById('formLastName').value = nameParts[1];
   }
 
-  // Transition to form
   document.getElementById('stepLookup').style.display = 'none';
   document.getElementById('stepForm').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetSearch() {
+  pendingGuest = null;
+  document.getElementById('confirmCard').classList.remove('visible');
+  document.getElementById('nameInput').value = '';
+  document.getElementById('nameInput').focus();
 }
 
 // ── Attending toggle ──
