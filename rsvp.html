@@ -502,7 +502,8 @@ function findMatches(query) {
 function onNameInput() {
   const query = document.getElementById('nameInput').value;
   document.getElementById('lookupError').classList.remove('visible');
-  if (query.length < 2) {
+  const hasFirstAndLast = query.trim().includes(" ") && query.trim().length >= 4;
+  if (!hasFirstAndLast) {
     document.getElementById('suggestions').classList.remove('visible');
     return;
   }
