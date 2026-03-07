@@ -73,32 +73,6 @@
 }
 .lookup-field button:hover { background: var(--eucalyptus-deep); }
 
-/* Suggestions dropdown */
-.suggestions {
-  display: none;
-  background: var(--white);
-  border: 1px solid var(--eucalyptus-pale);
-  border-radius: 4px;
-  box-shadow: 0 4px 20px rgba(92,138,114,0.12);
-  text-align: left;
-  margin-bottom: 14px;
-  overflow: hidden;
-}
-.suggestions.visible { display: block; }
-.suggestion-item {
-  padding: 12px 18px;
-  font-size: 14px;
-  color: var(--text-mid);
-  cursor: pointer;
-  transition: background .15s;
-  border-bottom: 1px solid var(--eucalyptus-mist);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.suggestion-item:last-child { border-bottom: none; }
-.suggestion-item:hover { background: var(--eucalyptus-mist); color: var(--eucalyptus-deep); }
-.suggestion-item .s-icon { font-size: 16px; flex-shrink: 0; }
 
 /* Error / not found state */
 .lookup-error {
@@ -165,12 +139,9 @@
 
     <div class="lookup-field">
       <input type="text" id="nameInput" placeholder="Enter your full name…"
-             oninput="onNameInput()" onkeydown="if(event.key==='Enter'){searchGuest()}">
+             onkeydown="if(event.key==='Enter'){searchGuest()}">
       <button onclick="searchGuest()">Find Me</button>
     </div>
-
-    <!-- Live suggestions -->
-    <div class="suggestions" id="suggestions"></div>
 
     <!-- Not found message -->
     <div class="lookup-error" id="lookupError">
@@ -500,48 +471,18 @@ function findMatches(query) {
 // UI LOGIC
 // ══════════════════════════════════════════
 
-function onNameInput() {
-  const query = document.getElementById('nameInput').value;
-  document.getElementById('lookupError').classList.remove('visible');
-  const hasFirstAndLast = query.trim().includes(" ") && query.trim().length >= 4;
-  if (!hasFirstAndLast) {
-    document.getElementById('suggestions').classList.remove('visible');
-    return;
-  }
-  const matches = findMatches(query);
-  const box = document.getElementById('suggestions');
-  if (matches.length === 0) { box.classList.remove('visible'); return; }
-  box.innerHTML = matches.map(m => `
-    <div class="suggestion-item" onclick="selectGuest('${m.guest.display.replace(/'/g,"\\'")}')">
-      <span class="s-icon">👤</span>
-      ${m.guest.display}
-    </div>`).join('');
-  box.classList.add('visible');
-}
-
 function searchGuest() {
   const query = document.getElementById('nameInput').value.trim();
   if (!query) return;
   const matches = findMatches(query);
   if (matches.length === 0) {
-    document.getElementById('suggestions').classList.remove('visible');
     document.getElementById('lookupError').classList.add('visible');
-  } else if (matches.length === 1 && matches[0].score > 0.85) {
-    selectGuest(matches[0].guest.display);
   } else {
-    // Show suggestions for them to pick
-    const box = document.getElementById('suggestions');
-    box.innerHTML = matches.map(m => `
-      <div class="suggestion-item" onclick="selectGuest('${m.guest.display.replace(/'/g,"\\'")}')">
-        <span class="s-icon">👤</span>
-        ${m.guest.display}
-      </div>`).join('');
-    box.classList.add('visible');
+    selectGuest(matches[0].guest.display);
   }
 }
 
 function selectGuest(displayName) {
-  document.getElementById('suggestions').classList.remove('visible');
   document.getElementById('lookupError').classList.remove('visible');
   document.getElementById('matchedGuestField').value = displayName;
 
