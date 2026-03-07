@@ -191,10 +191,11 @@
       <p>We're so glad you're here. Please fill out the form below.</p>
     </div>
 
-    <form class="rsvp-form" action="https://formspree.io/f/xgoneppj" method="POST">
+    <form class="rsvp-form" action="https://api.web3forms.com/submit" method="POST">
 
-      <input type="hidden" name="_subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
-      <input type="hidden" name="_next" value="thankyou.html">
+      <input type="hidden" name="access_key" value="9926a47f-41ce-4684-911c-91ee60c93525">
+      <input type="hidden" name="subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
+      <input type="hidden" name="redirect" value="thankyou.html">
       <!-- Hidden field carries matched guest name -->
       <input type="hidden" name="matched_guest" id="matchedGuestField" value="">
 
@@ -329,6 +330,8 @@ function toggleNav() { document.getElementById('navLinks').classList.toggle('ope
 // GUEST LIST — parsed from your invite list
 // ══════════════════════════════════════════
 const GUESTS = [
+  { display: "Mr. Johnny Hipsman", search: ["johnny hipsman", "john hipsman"] },
+  { display: "Ms. Jeanine Sorrentino", search: ["jeanine sorrentino"] },
   { display: "Ms. Jena Sorrentino & Mr. Anthony Abbatine", search: ["jena sorrentino","anthony abbatine"] },
   { display: "Mrs. Camille Agro", search: ["camille agro"] },
   { display: "Mr. James Agro & Guest", search: ["james agro"] },
