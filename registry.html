@@ -7,6 +7,122 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAD7ElEQVR4nO1bS0wTURQ9M5QGaMsnjXzkKx+hiIhoTIgmLNSEGBbGkMCCRF24cKcsWLg2Lliwd2NiQkzYkGhCoqaJEVNNRIKhyP9TBCEgH6F8BIFxNaVvoHQ6zHtvWji792bae855591Opx0BjFDf1CCFcn5LY7NAi4s/qBUJVXAw0DJE9zfVW7gSehuh25vRFq6EXkYc+U1YC1fiqEZofjFv4UpoNULU8iKjiQe0cwrZACOKl6GFm+rYGFn4QVC7JVQlINzEA+o5BzUgHMXLUMNdUxOMJBxqQDivvoxgGgIaEAniZRym5UADIkm8jECaTKyJ+ONSQQke3b6v6tz5lSU8fv5Udw77PitZrr4AAfEWK9LtKbhedhVXCkv3neP2DOLttw6MTE9gfXPjyDWV1wdcEyBBwvKaF8trXgxOjaM8/xlMUXuUFlaW0Nz2Ats729Q4ED2A596XJAmiSLakjt5O3cUrNRrmOiDjVCpEgaTTNdxLva6vIu/O78jMI8bLa178nJumUstfq2EScP5METHu9QxBAv01EQH+q2+KMsGRkUvM9YwPUK0pazZEAhyZeTBHm31jCRLcE0NMahvCgFJF/D2zv+BdX2VS2yAGFBJj2vH3h8h7/9vjk3DankLMuccHmdSub2qQuCfggiL+G1t/MTLtYVafuwHK/f9jYhg7u7vM6nM1IEqMQnF2PjHHKv4yuBpQkJ6DWHMMMdfjOUYGKOM/sziH+eVFphy4GqBsgG7Gqw9wNCDBYkNmchox18N4/wMcDSg9UwTB74bU9s42+idHmfPgaoA/BqfGsPVvizkPLgYIgoCSnLPE3Pexfh5U+BiQl5YFa0wcMdc92seDCkRW/8byx/5vf1OYXZpnTQMtjc0ClbvC57IL8KCqFmZTNNo+v4ez20UcVxrw0f2VBg1VoLIF7t2sgT0+CbY4K+7euANbrMV3zBprQW5qpm+8sr6KT72dNGioAhUD7LZEYhxt2gtaheMiBGFv17368AabHLq/DBHQ/793w4qvsxWOcphN0SjOykfNtSrfvLPbBVdfl56lVUPWTKUHvHS24UntQyRYbACAuspq1FVW+45LkPD6ixNtrnc0yocEYuX1vDtki7Pi1uVKlOUVIznRDkmSsOD9g4HJUTi7XZj8PaNXqZDhn3hqvw1611fR2tGO1o52WiV0AdEEeVwTsIZSI/dbYryxz4BITsFB2k4ScNBkJKYgkKaACYgkEw7TcugWiAQTgmk46QHBTgjnFKjhrioB4WiCWs4hC+P9a3IwhLpYIfcAI6dBCzdNTdCIJmjldPLYnF5Eju2Dk0oc20dnlTi2D08HglEfn/8PXTNbFEjiv8YAAAAASUVORK5CYII=">
+<style>
+.gift-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.gift-card {
+  background: var(--white);
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.gift-card-header {
+  background: var(--eucalyptus-mist);
+  padding: 28px 36px 24px;
+  border-bottom: 1px solid var(--eucalyptus-pale);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.gift-card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--eucalyptus);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.gift-card-header h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin: 0 0 3px;
+}
+.gift-card-header p {
+  font-size: 12px;
+  color: var(--text-light);
+  margin: 0;
+  letter-spacing: .04em;
+}
+.gift-card-body {
+  padding: 28px 36px 32px;
+}
+.gift-card-body p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-mid);
+  margin-bottom: 24px;
+}
+.gift-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--off-white);
+  border: 1px solid var(--eucalyptus-mist);
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.gift-detail-row .detail-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: .2em;
+  color: var(--text-light);
+  text-transform: uppercase;
+  min-width: 60px;
+}
+.gift-detail-row .detail-value {
+  font-size: 15px;
+  color: var(--text-dark);
+  font-weight: 400;
+  letter-spacing: .02em;
+}
+.gift-note {
+  font-size: 12px;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 6px;
+}
+.divider-ornament {
+  text-align: center;
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.divider-ornament .line { flex: 1; height: 1px; background: var(--eucalyptus-pale); }
+.divider-ornament span {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: .25em;
+  color: var(--eucalyptus-light);
+  text-transform: uppercase;
+}
+.mail-address {
+  text-align: center;
+  padding: 28px;
+}
+.mail-address .address-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.mail-address .address-line {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.9;
+}
+</style>
 </head>
 <body>
 
@@ -27,52 +143,61 @@
 </nav>
 
 <div class="page-wrap">
-<div class="inner">
+<div class="gift-wrap">
 
   <div class="page-header anim">
     <h1>Registry</h1>
-    <p>Your presence at our wedding is the greatest gift of all. For those who wish to give, we've created a few options below.</p>
+    <p>Your presence at our wedding is the greatest gift of all. For those who wish to give, we are grateful for any contribution toward our new home.</p>
   </div>
 
-  <div class="registry-note anim anim-d1">
-    "The most important thing to us is celebrating with you. Please don't feel obligated — your company means everything."
-  </div>
-
-  <p class="sec-label">Our Registries</p>
-
-  <div class="registry-grid anim anim-d2">
-    <div class="registry-card">
-      <span class="reg-logo">🏠</span>
-      <h3>Crate & Barrel</h3>
-      <p>Kitchen, dining, and home essentials to start our life together.</p>
-      <!-- Replace # with your actual registry link -->
-      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
+  <!-- Zelle card -->
+  <div class="gift-card anim anim-d1">
+    <div class="gift-card-header">
+      <div class="gift-card-icon">🏡</div>
+      <div>
+        <h3>New Home Fund</h3>
+        <p>Send directly via Zelle — no fees, straight to us</p>
+      </div>
     </div>
-    <div class="registry-card">
-      <span class="reg-logo">🍳</span>
-      <h3>Williams Sonoma</h3>
-      <p>Cookware, appliances, and everything we need for our home kitchen.</p>
-      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
-    </div>
-    <div class="registry-card">
-      <span class="reg-logo">🎁</span>
-      <h3>Amazon</h3>
-      <p>A mix of everyday essentials and special items for our new home.</p>
-      <a class="btn" href="#" style="font-size:9px;padding:10px 22px;">View Registry</a>
+    <div class="gift-card-body">
+      <p>We are saving toward our first home together. Any contribution, large or small, means so much to us. To send a gift via Zelle, simply open your banking app and send to the number below.</p>
+
+      <div class="gift-detail-row">
+        <span class="detail-label">Send to</span>
+        <span class="detail-value">(845) 467-0619</span>
+      </div>
+      <div class="gift-detail-row">
+        <span class="detail-label">Name</span>
+        <span class="detail-value">Jeanine Sorrentino</span>
+      </div>
+
+      <p class="gift-note">Zelle is built into most major banking apps — Chase, Bank of America, Wells Fargo, and more. No account or download needed.</p>
     </div>
   </div>
 
-  <p class="sec-label">Honeymoon Fund</p>
+  <!-- Divider -->
+  <div class="divider-ornament anim anim-d2">
+    <div class="line"></div>
+    <span>Prefer to send a card?</span>
+    <div class="line"></div>
+  </div>
 
-  <div class="registry-cash anim anim-d3">
-    <div>
-      <h3>Contribute to Our Honeymoon</h3>
-      <p>We're dreaming of a special trip to celebrate our marriage. If you'd like to contribute to our honeymoon fund, we would be so grateful. Every contribution, big or small, helps make our dream trip a reality.</p>
-      <br>
-      <!-- Replace # with your Venmo, PayPal, or Zola fund link -->
-      <a class="btn" href="#">Contribute</a>
+  <!-- Mailing address card -->
+  <div class="gift-card anim anim-d3">
+    <div class="gift-card-header">
+      <div class="gift-card-icon">✉️</div>
+      <div>
+        <h3>Send a Card</h3>
+        <p>Cards and well wishes are always cherished</p>
+      </div>
     </div>
-    <div class="registry-cash-visual">🌍</div>
+    <div class="gift-card-body mail-address">
+      <div class="address-name">Jeanine &amp; Johnny</div>
+      <div class="address-line">
+        13 Forester Ave, Apt 204<br>
+        Warwick, NY 10990
+      </div>
+    </div>
   </div>
 
 </div>
