@@ -6,6 +6,135 @@
 <title>RSVP — Jeanine & Johnny</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* ── Guest lookup styles ── */
+.lookup-wrap {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 64px 36px 40px;
+}
+.lookup-wrap h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 7vw, 60px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+.lookup-wrap p { font-size: 13px; line-height: 1.75; color: var(--text-mid); margin-bottom: 32px; }
+.lookup-deadline {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--eucalyptus-deep);
+  background: var(--eucalyptus-mist);
+  padding: 6px 16px;
+  border-radius: 2px;
+  margin-bottom: 40px;
+}
+.lookup-field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.lookup-field input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 4px;
+  background: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.lookup-field input:focus {
+  border-color: var(--eucalyptus-light);
+  box-shadow: 0 0 0 3px rgba(92,138,114,0.1);
+}
+.lookup-field button {
+  padding: 14px 24px;
+  background: var(--eucalyptus);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.lookup-field button:hover { background: var(--eucalyptus-deep); }
+
+/* Suggestions dropdown */
+.suggestions {
+  display: none;
+  background: var(--white);
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(92,138,114,0.12);
+  text-align: left;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.suggestions.visible { display: block; }
+.suggestion-item {
+  padding: 12px 18px;
+  font-size: 14px;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: background .15s;
+  border-bottom: 1px solid var(--eucalyptus-mist);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-item:hover { background: var(--eucalyptus-mist); color: var(--eucalyptus-deep); }
+.suggestion-item .s-icon { font-size: 16px; flex-shrink: 0; }
+
+/* Error / not found state */
+.lookup-error {
+  display: none;
+  background: #fdf4f2;
+  border: 1px solid #e8c5bc;
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #8b4a3c;
+  line-height: 1.65;
+  text-align: left;
+  margin-bottom: 14px;
+}
+.lookup-error.visible { display: block; }
+
+/* Welcome banner */
+.welcome-banner {
+  display: none;
+  background: var(--eucalyptus-mist);
+  border: 1px solid var(--eucalyptus-pale);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.welcome-banner.visible { display: block; }
+.welcome-banner .w-icon { font-size: 28px; margin-bottom:10px; }
+.welcome-banner h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-style: italic;
+  color: var(--eucalyptus-deep);
+  margin-bottom: 6px;
+}
+.welcome-banner p { font-size: 13px; color: var(--text-mid); }
+</style>
 </head>
 <body>
 
@@ -26,126 +155,153 @@
 </nav>
 
 <div class="page-wrap">
-<div class="rsvp-wrap">
 
-  <div class="rsvp-header anim">
+  <!-- ══ STEP 1: Name lookup ══ -->
+  <div id="stepLookup" class="lookup-wrap anim">
     <h1>Kindly Reply</h1>
-    <p>We would be honored to have you celebrate with us. Please fill out the form below for your party.</p>
-    <span class="deadline">Kindly reply by June 1st, 2026</span>
+    <p>We would be honored to have you celebrate with us. To get started, please enter your name below.</p>
+    <span class="lookup-deadline">Kindly reply by June 1st, 2026</span>
+
+    <div class="lookup-field">
+      <input type="text" id="nameInput" placeholder="Enter your full name…"
+             oninput="onNameInput()" onkeydown="if(event.key==='Enter'){searchGuest()}">
+      <button onclick="searchGuest()">Find Me</button>
+    </div>
+
+    <!-- Live suggestions -->
+    <div class="suggestions" id="suggestions"></div>
+
+    <!-- Not found message -->
+    <div class="lookup-error" id="lookupError">
+      We couldn't find your name on our guest list. Please double-check the spelling, or try just your last name.
+      If you're still having trouble, reach out to us at
+      <a href="mailto:jeaninesorrentino11@gmail.com" style="color:var(--eucalyptus);">jeaninesorrentino11@gmail.com</a>.
+    </div>
   </div>
 
-  <form class="rsvp-form" action="https://formspree.io/f/xgoneppj" method="POST">
+  <!-- ══ STEP 2: RSVP Form (hidden until name found) ══ -->
+  <div id="stepForm" style="display:none;">
+  <div class="rsvp-wrap">
 
-    <input type="hidden" name="_subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
-    <input type="hidden" name="_next" value="thankyou.html">
-
-    <!-- 1. Name -->
-    <div class="form-row">
-      <div class="form-group anim anim-d1">
-        <label>First Name</label>
-        <input type="text" name="first_name" placeholder="First name" required>
-      </div>
-      <div class="form-group anim anim-d1">
-        <label>Last Name</label>
-        <input type="text" name="last_name" placeholder="Last name" required>
-      </div>
+    <!-- Welcome banner -->
+    <div class="welcome-banner visible" id="welcomeBanner">
+      <div class="w-icon">🌿</div>
+      <h3 id="welcomeMsg">Welcome!</h3>
+      <p>We're so glad you're here. Please fill out the form below.</p>
     </div>
 
-    <!-- 2. Email -->
-    <div class="form-group anim anim-d2">
-      <label>Email Address</label>
-      <input type="email" name="email" placeholder="your@email.com" required>
-    </div>
+    <form class="rsvp-form" action="https://formspree.io/f/xgoneppj" method="POST">
 
-    <!-- 3. Attending -->
-    <div class="form-group anim anim-d2">
-      <label>Will you be attending?</label>
-      <div class="radio-group">
-        <label class="radio-option" id="opt-yes" onclick="selectAttending('yes')">
-          <input type="radio" name="attending" value="Joyfully Accepts" required>
-          <span class="radio-dot"></span>
-          Joyfully Accepts
-        </label>
-        <label class="radio-option" id="opt-no" onclick="selectAttending('no')">
-          <input type="radio" name="attending" value="Regretfully Declines">
-          <span class="radio-dot"></span>
-          Regretfully Declines
-        </label>
-      </div>
-    </div>
+      <input type="hidden" name="_subject" value="New RSVP — Jeanine & Johnny Wedding 🌿">
+      <input type="hidden" name="_next" value="thankyou.html">
+      <!-- Hidden field carries matched guest name -->
+      <input type="hidden" name="matched_guest" id="matchedGuestField" value="">
 
-    <!-- Fields only visible when attending YES -->
-    <div class="guest-fields" id="guestFields">
-
-      <!-- 4. Number of guests + names -->
-      <div class="form-group anim">
-        <label>Number of Guests (including yourself)</label>
-        <select name="guest_count" id="guestCount" onchange="updateGuestNames()">
-          <option value="1">1 Guest</option>
-          <option value="2">2 Guests</option>
-          <option value="3">3 Guests</option>
-          <option value="4">4 Guests</option>
-        </select>
+      <!-- 1. Name -->
+      <div class="form-row">
+        <div class="form-group anim anim-d1">
+          <label>First Name</label>
+          <input type="text" name="first_name" id="formFirstName" placeholder="First name" required>
+        </div>
+        <div class="form-group anim anim-d1">
+          <label>Last Name</label>
+          <input type="text" name="last_name" id="formLastName" placeholder="Last name" required>
+        </div>
       </div>
 
-      <!-- Dynamic additional guest name fields (guest 1 = the person filling in) -->
-      <div id="guestNameFields"></div>
-
-      <!-- 5. Dietary restrictions -->
-      <div class="form-group anim">
-        <label>Dietary Restrictions or Allergies</label>
-        <textarea name="dietary" placeholder="Please let us know of any dietary needs or allergies…"></textarea>
+      <!-- 2. Email -->
+      <div class="form-group anim anim-d2">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
       </div>
 
-      <!-- 6. Hotel block -->
-      <div class="form-group anim">
-        <label>Will you be staying at our hotel block?</label>
-        <div class="radio-group" id="hotelGroup">
-          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
-            <input type="radio" name="staying_at_hotel" value="Yes">
-            <span class="radio-dot"></span>Yes
+      <!-- 3. Attending -->
+      <div class="form-group anim anim-d2">
+        <label>Will you be attending?</label>
+        <div class="radio-group">
+          <label class="radio-option" id="opt-yes" onclick="selectAttending('yes')">
+            <input type="radio" name="attending" value="Joyfully Accepts" required>
+            <span class="radio-dot"></span>Joyfully Accepts
           </label>
-          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
-            <input type="radio" name="staying_at_hotel" value="No">
-            <span class="radio-dot"></span>No
-          </label>
-          <label class="radio-option" onclick="selectGroup('hotelGroup', this)">
-            <input type="radio" name="staying_at_hotel" value="Not Sure Yet">
-            <span class="radio-dot"></span>Not Sure Yet
+          <label class="radio-option" id="opt-no" onclick="selectAttending('no')">
+            <input type="radio" name="attending" value="Regretfully Declines">
+            <span class="radio-dot"></span>Regretfully Declines
           </label>
         </div>
-        <span class="form-hint">We've reserved a discounted block at the JFK Regency Hyatt — <a href="stay.html" style="color:var(--eucalyptus);">details here</a>.</span>
       </div>
 
-      <!-- 7. Song request -->
-      <div class="form-group anim">
-        <label>Song Request 🎵</label>
-        <input type="text" name="song_request" placeholder="What song will get you on the dance floor?">
-        <span class="form-hint">Help us build the perfect playlist!</span>
+      <!-- Fields shown only if attending -->
+      <div class="guest-fields" id="guestFields">
+
+        <!-- 4. Number of guests + names -->
+        <div class="form-group anim">
+          <label>Number of Guests (including yourself)</label>
+          <select name="guest_count" id="guestCount" onchange="updateGuestNames()">
+            <option value="1">1 Guest</option>
+            <option value="2">2 Guests</option>
+            <option value="3">3 Guests</option>
+            <option value="4">4 Guests</option>
+          </select>
+        </div>
+
+        <div id="guestNameFields"></div>
+
+        <!-- 5. Dietary -->
+        <div class="form-group anim">
+          <label>Dietary Restrictions or Allergies</label>
+          <textarea name="dietary" placeholder="Please let us know of any dietary needs or allergies…"></textarea>
+        </div>
+
+        <!-- 6. Hotel -->
+        <div class="form-group anim">
+          <label>Will you be staying at our hotel block?</label>
+          <div class="radio-group" id="hotelGroup">
+            <label class="radio-option" onclick="selectGroup('hotelGroup',this)">
+              <input type="radio" name="staying_at_hotel" value="Yes">
+              <span class="radio-dot"></span>Yes
+            </label>
+            <label class="radio-option" onclick="selectGroup('hotelGroup',this)">
+              <input type="radio" name="staying_at_hotel" value="No">
+              <span class="radio-dot"></span>No
+            </label>
+            <label class="radio-option" onclick="selectGroup('hotelGroup',this)">
+              <input type="radio" name="staying_at_hotel" value="Not Sure Yet">
+              <span class="radio-dot"></span>Not Sure Yet
+            </label>
+          </div>
+          <span class="form-hint">We've reserved a discounted block at the JFK Regency Hyatt — <a href="stay.html" style="color:var(--eucalyptus);">details here</a>.</span>
+        </div>
+
+        <!-- 7. Song request -->
+        <div class="form-group anim">
+          <label>Song Request 🎵</label>
+          <input type="text" name="song_request" placeholder="What song will get you on the dance floor?">
+          <span class="form-hint">Help us build the perfect playlist!</span>
+        </div>
+
+        <!-- 8. Advice -->
+        <div class="form-group anim">
+          <label>Advice for the Newlyweds <span style="opacity:.5">(optional)</span></label>
+          <textarea name="advice" placeholder="Share your best marriage advice…"></textarea>
+        </div>
+
       </div>
 
-      <!-- 8. Advice -->
-      <div class="form-group anim">
-        <label>Advice for the Newlyweds <span style="opacity:.5">(optional)</span></label>
-        <textarea name="advice" placeholder="Share your best marriage advice…"></textarea>
+      <!-- 9. Note — everyone sees this -->
+      <div class="form-group anim anim-d3">
+        <label>A Note for the Couple <span style="opacity:.5">(optional)</span></label>
+        <textarea name="note" placeholder="Share a wish, memory, or kind words…"></textarea>
       </div>
 
-    </div>
+      <div class="rsvp-submit-row anim anim-d4">
+        <button type="submit" class="btn">Send My RSVP</button>
+      </div>
 
-    <!-- 9. Note — shown to everyone -->
-    <div class="form-group anim anim-d3">
-      <label>A Note for the Couple <span style="opacity:.5">(optional)</span></label>
-      <textarea name="note" placeholder="Share a wish, memory, or kind words…"></textarea>
-    </div>
+    </form>
+  </div>
+  </div>
 
-    <div class="rsvp-submit-row anim anim-d4">
-      <button type="submit" class="btn">Send My RSVP</button>
-    </div>
-
-  </form>
-
-</div>
-</div>
+</div><!-- /page-wrap -->
 
 <footer class="site-footer">
   <div class="footer-mark">
@@ -168,10 +324,245 @@
 <script>
 function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
 
-// Attending toggle — shows/hides guest fields
-let attendingChoice = null;
+// ══════════════════════════════════════════
+// GUEST LIST — parsed from your invite list
+// ══════════════════════════════════════════
+const GUESTS = [
+  { display: "Ms. Jena Sorrentino & Mr. Anthony Abbatine", search: ["jena sorrentino","anthony abbatine"] },
+  { display: "Mrs. Camille Agro", search: ["camille agro"] },
+  { display: "Mr. James Agro & Guest", search: ["james agro"] },
+  { display: "Mr. & Mrs. Vincent Agro", search: ["vincent agro"] },
+  { display: "Mr. Matthew Anderson", search: ["matthew anderson"] },
+  { display: "Mr. Stefen Astafaj", search: ["stefen astafaj"] },
+  { display: "Mr. Jacob Motz & Ms. Jennifer Battiato", search: ["jacob motz","jennifer battiato"] },
+  { display: "Mr. Ryan Smith & Ms. Katie Battiato", search: ["ryan smith","katie battiato"] },
+  { display: "Mr. Christian Beal", search: ["christian beal"] },
+  { display: "The Bell Family", search: ["bell family","bell"] },
+  { display: "Ms. Jona Bell", search: ["jona bell"] },
+  { display: "Ms. Lori Bell", search: ["lori bell"] },
+  { display: "Mr. Ray Bell", search: ["ray bell"] },
+  { display: "Mr. Robert Bell", search: ["robert bell"] },
+  { display: "Ms. AnneMarie Benedetto", search: ["annemarie benedetto"] },
+  { display: "Mr. & Mrs. James Birkentall", search: ["james birkentall","birkentall"] },
+  { display: "Mr. Gary Brown", search: ["gary brown"] },
+  { display: "Mr. Jeff Brown", search: ["jeff brown","jeffrey brown"] },
+  { display: "Mr. & Mrs. Lawrence Brown", search: ["lawrence brown"] },
+  { display: "Mr. & Mrs. Joseph Cammarata", search: ["joseph cammarata","joe cammarata"] },
+  { display: "Ms. Angela Carucci", search: ["angela carucci"] },
+  { display: "Mr. Christopher Cassano", search: ["christopher cassano","chris cassano"] },
+  { display: "Mr. & Mrs. Derek Choi", search: ["derek choi"] },
+  { display: "Mr. Bryan Dalton", search: ["bryan dalton"] },
+  { display: "Mr. Nolan Danielewski & Guest", search: ["nolan danielewski"] },
+  { display: "Mrs. Debbie Sorrentino & Mr. Sandy Desideri", search: ["debbie sorrentino","sandy desideri"] },
+  { display: "Mr. & Mrs. Ralph DeVito", search: ["ralph devito"] },
+  { display: "The Dezio Family", search: ["dezio family","dezio"] },
+  { display: "Mr. & Mrs. John Dezio", search: ["john dezio"] },
+  { display: "Mr. & Mrs. Andrew Diaz", search: ["andrew diaz"] },
+  { display: "Mr. & Mrs. Anthony DiPalermo", search: ["anthony dipalermo"] },
+  { display: "Mr. & Mrs. John DiPalermo", search: ["john dipalermo"] },
+  { display: "Mr. John DiPalermo Jr.", search: ["john dipalermo jr","john dipalermo junior"] },
+  { display: "Mr. & Mrs. Joseph DiPalermo", search: ["joseph dipalermo","joe dipalermo"] },
+  { display: "Mrs. Loretta DiPalermo", search: ["loretta dipalermo"] },
+  { display: "Mr. Jared Drillings & Guest", search: ["jared drillings"] },
+  { display: "Mr. Dean Dulgerian", search: ["dean dulgerian"] },
+  { display: "Ms. Christine Ferreri", search: ["christine ferreri"] },
+  { display: "Dr. & Mrs. Joseph Fiorito", search: ["joseph fiorito","joe fiorito"] },
+  { display: "Mr. & Mrs. Sean Flynn", search: ["sean flynn"] },
+  { display: "Mr. Ivan Garosi", search: ["ivan garosi"] },
+  { display: "Mrs. Florence Gentile", search: ["florence gentile"] },
+  { display: "The Gilmore Family", search: ["gilmore family","gilmore"] },
+  { display: "Mr. Shane Gipson", search: ["shane gipson"] },
+  { display: "Ms. Toni Ann Granello", search: ["toni ann granello","toni granello"] },
+  { display: "Mr. TJ Gregory & Guest", search: ["tj gregory","thomas gregory"] },
+  { display: "Mr. John Sorrentino & Ms. Maggie Haslam", search: ["john sorrentino","maggie haslam"] },
+  { display: "Mr. Brian Hipsman", search: ["brian hipsman"] },
+  { display: "Mr. & Mrs. Derek Hipsman", search: ["derek hipsman"] },
+  { display: "Mr. & Mrs. Eugene Hipsman", search: ["eugene hipsman"] },
+  { display: "Mrs. Filomena Hipsman", search: ["filomena hipsman"] },
+  { display: "Mr. & Mrs. Garrett Hipsman", search: ["garrett hipsman"] },
+  { display: "Mr. & Mrs. John Hipsman", search: ["john hipsman"] },
+  { display: "Mr. Kevin Hipsman", search: ["kevin hipsman"] },
+  { display: "Mr. Matthew Hipsman", search: ["matthew hipsman","matt hipsman"] },
+  { display: "Mr. Michael Hipsman", search: ["michael hipsman","mike hipsman"] },
+  { display: "Mr. & Mrs. Michael Hipsman", search: ["michael hipsman","mike hipsman"] },
+  { display: "Mrs. Sharyn Hipsman", search: ["sharyn hipsman"] },
+  { display: "Mr. Zack Hipsman", search: ["zack hipsman","zachary hipsman"] },
+  { display: "Mr. Daniel Burke & Ms. Avery Holley", search: ["daniel burke","avery holley"] },
+  { display: "The Hudson Family", search: ["hudson family","hudson"] },
+  { display: "Mr. & Mrs. Shawn Hudson", search: ["shawn hudson"] },
+  { display: "Mr. & Mrs. Tyler Hudson", search: ["tyler hudson"] },
+  { display: "Mr. & Mrs. Tanner Hutchinson", search: ["tanner hutchinson"] },
+  { display: "Mr. & Mrs. Michael Katzman", search: ["michael katzman"] },
+  { display: "The Kelly Family", search: ["kelly family","kelly"] },
+  { display: "Mrs. Dorothy Kelly", search: ["dorothy kelly"] },
+  { display: "Mr. & Mrs. John Kenny", search: ["john kenny"] },
+  { display: "Mr. & Mrs. Michael Kenny", search: ["michael kenny"] },
+  { display: "Mrs. Catherine Klein", search: ["catherine klein"] },
+  { display: "Linda Rankin & Joe Kurpel", search: ["linda rankin","joe kurpel","joseph kurpel"] },
+  { display: "The Leshiner Family", search: ["leshiner family","leshiner"] },
+  { display: "The Lewis Family", search: ["lewis family","lewis"] },
+  { display: "Mrs. Helen Lewis", search: ["helen lewis"] },
+  { display: "Mr. & Mrs. Daniel Lue", search: ["daniel lue"] },
+  { display: "Ms. Joyce Marchione", search: ["joyce marchione"] },
+  { display: "Mr. Jacob Marcus", search: ["jacob marcus"] },
+  { display: "Mr. Alden Mathes", search: ["alden mathes"] },
+  { display: "Mr. & Mrs. Paul McCahey", search: ["paul mccahey"] },
+  { display: "Mr. & Mrs. Guy Melita", search: ["guy melita"] },
+  { display: "The Merchant Family", search: ["merchant family","merchant"] },
+  { display: "Mr. Jake Miller", search: ["jake miller"] },
+  { display: "Ms. Denise Mincieli", search: ["denise mincieli"] },
+  { display: "Mr. Andrew Moy", search: ["andrew moy"] },
+  { display: "Mr. & Mrs. Daniel Mulvey", search: ["daniel mulvey"] },
+  { display: "Ms. Andrea O'Gorman", search: ["andrea o'gorman","andrea ogorman"] },
+  { display: "Mr. & Mrs. Sean O'Neil", search: ["sean o'neil","sean oneil"] },
+  { display: "Mr. Vincent Pungello", search: ["vincent pungello"] },
+  { display: "Mr. & Mrs. Catello Rispoli", search: ["catello rispoli"] },
+  { display: "Ms. Joy Rizzo", search: ["joy rizzo"] },
+  { display: "Mrs. Maria Rizzo", search: ["maria rizzo"] },
+  { display: "Mr. & Mrs. Robert Rizzo", search: ["robert rizzo"] },
+  { display: "The Sorrentino Family & Mr. Frank Romano", search: ["sorrentino family","frank romano"] },
+  { display: "Mr. Andrew Salerno", search: ["andrew salerno"] },
+  { display: "Mr. & Mrs. Scherrer", search: ["scherrer"] },
+  { display: "Mr. & Mrs. Frank Schwamborn", search: ["frank schwamborn"] },
+  { display: "Ms. Victoria Scrobe", search: ["victoria scrobe"] },
+  { display: "Mr. & Mrs. John Seeley", search: ["john seeley"] },
+  { display: "The Sorrentino Family", search: ["sorrentino family","sorrentino"] },
+  { display: "Mr. & Mrs. John Sorrentino", search: ["john sorrentino"] },
+  { display: "Mr. & Mrs. Craig Stalker", search: ["craig stalker"] },
+  { display: "Mrs. June Stalker", search: ["june stalker"] },
+  { display: "Ms. Debbie Summerill", search: ["debbie summerill"] },
+  { display: "The Thomas Family", search: ["thomas family","thomas"] },
+  { display: "Mr. Keefe Vallaro & Guest", search: ["keefe vallaro"] },
+  { display: "Mr. & Mrs. Jose Velez", search: ["jose velez"] },
+  { display: "Mr. Robert Wacker", search: ["robert wacker"] },
+  { display: "Mr. Kyle Hipsman & Ms. Kaia Whiteley", search: ["kyle hipsman","kaia whiteley"] }
+];
+
+// ══════════════════════════════════════════
+// FUZZY MATCHING
+// ══════════════════════════════════════════
+
+// Levenshtein distance for fuzzy matching
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, (_, i) => [i]);
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+function fuzzyScore(query, candidate) {
+  query = query.toLowerCase().trim();
+  candidate = candidate.toLowerCase().trim();
+  if (candidate.includes(query)) return 1.0;
+  // Try word-by-word matching
+  const qWords = query.split(/\s+/);
+  const cWords = candidate.split(/\s+/);
+  let wordScore = 0;
+  for (const qw of qWords) {
+    let best = 0;
+    for (const cw of cWords) {
+      const maxLen = Math.max(qw.length, cw.length);
+      if (maxLen === 0) continue;
+      const dist = levenshtein(qw, cw);
+      const s = 1 - dist / maxLen;
+      if (s > best) best = s;
+    }
+    wordScore += best;
+  }
+  return wordScore / qWords.length;
+}
+
+function findMatches(query) {
+  if (!query || query.trim().length < 2) return [];
+  const results = [];
+  const seen = new Set();
+  for (const guest of GUESTS) {
+    let best = 0;
+    for (const s of guest.search) {
+      const score = fuzzyScore(query, s);
+      if (score > best) best = score;
+    }
+    if (best >= 0.55 && !seen.has(guest.display)) {
+      seen.add(guest.display);
+      results.push({ guest, score: best });
+    }
+  }
+  return results.sort((a,b) => b.score - a.score).slice(0, 5);
+}
+
+// ══════════════════════════════════════════
+// UI LOGIC
+// ══════════════════════════════════════════
+
+function onNameInput() {
+  const query = document.getElementById('nameInput').value;
+  document.getElementById('lookupError').classList.remove('visible');
+  if (query.length < 2) {
+    document.getElementById('suggestions').classList.remove('visible');
+    return;
+  }
+  const matches = findMatches(query);
+  const box = document.getElementById('suggestions');
+  if (matches.length === 0) { box.classList.remove('visible'); return; }
+  box.innerHTML = matches.map(m => `
+    <div class="suggestion-item" onclick="selectGuest('${m.guest.display.replace(/'/g,"\\'")}')">
+      <span class="s-icon">👤</span>
+      ${m.guest.display}
+    </div>`).join('');
+  box.classList.add('visible');
+}
+
+function searchGuest() {
+  const query = document.getElementById('nameInput').value.trim();
+  if (!query) return;
+  const matches = findMatches(query);
+  if (matches.length === 0) {
+    document.getElementById('suggestions').classList.remove('visible');
+    document.getElementById('lookupError').classList.add('visible');
+  } else if (matches.length === 1 && matches[0].score > 0.85) {
+    selectGuest(matches[0].guest.display);
+  } else {
+    // Show suggestions for them to pick
+    const box = document.getElementById('suggestions');
+    box.innerHTML = matches.map(m => `
+      <div class="suggestion-item" onclick="selectGuest('${m.guest.display.replace(/'/g,"\\'")}')">
+        <span class="s-icon">👤</span>
+        ${m.guest.display}
+      </div>`).join('');
+    box.classList.add('visible');
+  }
+}
+
+function selectGuest(displayName) {
+  document.getElementById('suggestions').classList.remove('visible');
+  document.getElementById('lookupError').classList.remove('visible');
+  document.getElementById('matchedGuestField').value = displayName;
+
+  // Extract first name for welcome message
+  const clean = displayName.replace(/^(Dr\. & Mrs\.|Mr\. & Mrs\.|Mrs\.|Mr\.|Ms\.|Dr\.|The )/,'').trim();
+  const firstName = clean.split(/\s+/)[0];
+
+  document.getElementById('welcomeMsg').textContent = `Welcome, ${firstName}!`;
+  document.getElementById('formFirstName').value = firstName;
+
+  // Pre-fill last name if parseable
+  const nameParts = clean.split(/\s+/);
+  if (nameParts.length >= 2 && !['&','Family','and'].includes(nameParts[1])) {
+    document.getElementById('formLastName').value = nameParts[1];
+  }
+
+  // Transition to form
+  document.getElementById('stepLookup').style.display = 'none';
+  document.getElementById('stepForm').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Attending toggle ──
 function selectAttending(val) {
-  attendingChoice = val;
   document.getElementById('opt-yes').classList.toggle('selected', val === 'yes');
   document.getElementById('opt-no').classList.toggle('selected',  val === 'no');
   const gf = document.getElementById('guestFields');
@@ -179,7 +570,7 @@ function selectAttending(val) {
   else { gf.classList.remove('visible'); }
 }
 
-// Generic radio group visual selection
+// ── Radio group helper ──
 function selectGroup(groupId, el) {
   document.getElementById(groupId)
     .querySelectorAll('.radio-option')
@@ -187,7 +578,7 @@ function selectGroup(groupId, el) {
   el.classList.add('selected');
 }
 
-// Render extra guest name fields (skip guest 1 — that's the person submitting)
+// ── Dynamic guest name fields ──
 function updateGuestNames() {
   const count = parseInt(document.getElementById('guestCount').value) || 1;
   const wrap = document.getElementById('guestNameFields');
