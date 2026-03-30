@@ -150,6 +150,19 @@
 }
 .confirm-btns .btn-no:hover { border-color: var(--eucalyptus-light); color: var(--eucalyptus-deep); }
 
+.result-item {
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--text-mid);
+  cursor: pointer;
+  border-bottom: 1px solid var(--eucalyptus-mist);
+  transition: background .15s, color .15s;
+  font-family: 'Jost', sans-serif;
+}
+.result-item:last-child { border-bottom: none; }
+.result-item:hover { background: var(--eucalyptus-mist); color: var(--eucalyptus-deep); }
+
+
 
 /* Welcome banner */
 .welcome-banner {
@@ -175,12 +188,12 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="RSVP — Jeanine & Johnny">
   <meta property="og:description" content="Kindly reply by June 1st, 2026. We hope you can celebrate with us!">
-  <meta property="og:image" content="https://jeanineandjohnny.pages.dev/og-image.jpg">
-  <meta property="og:url" content="https://jeanineandjohnny.pages.dev">
+  <meta property="og:image" content="https://jeanineandjohnny.com/og-image.jpg">
+  <meta property="og:url" content="https://jeanineandjohnny.com">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="RSVP — Jeanine & Johnny">
   <meta name="twitter:description" content="Kindly reply by June 1st, 2026. We hope you can celebrate with us!">
-  <meta name="twitter:image" content="https://jeanineandjohnny.pages.dev/og-image.jpg">
+  <meta name="twitter:image" content="https://jeanineandjohnny.com/og-image.jpg">
 </head>
 <body>
 
@@ -205,23 +218,19 @@
   <!-- ══ STEP 1: Name lookup ══ -->
   <div id="stepLookup" class="lookup-wrap anim">
     <h1>Kindly Reply</h1>
-    <p>We would be honored to have you celebrate with us. To get started, please enter your name below.</p>
+    <p>We would be honored to have you celebrate with us. To get started, please enter your last name below.</p>
     <span class="lookup-deadline">Kindly reply by June 1st, 2026</span>
 
     <div class="lookup-field">
-      <input type="text" id="nameInput" placeholder="Enter your full name…"
+      <input type="text" id="nameInput" placeholder="Enter your last name…"
              onkeydown="if(event.key==='Enter'){searchGuest()}">
       <button onclick="searchGuest()">Find Me</button>
     </div>
 
-    <!-- Confirm card -->
+    <!-- Results list -->
     <div class="confirm-card" id="confirmCard">
-      <div class="confirm-label">Is this you?</div>
-      <div class="confirm-name" id="confirmName"></div>
-      <div class="confirm-btns">
-        <button class="btn-yes" onclick="confirmGuest()">Yes, that's me</button>
-        <button class="btn-no" onclick="resetSearch()">Not me, search again</button>
-      </div>
+      <div class="confirm-label">Select your name</div>
+      <div id="resultsList"></div>
     </div>
 
     <!-- Not found message -->
@@ -367,203 +376,175 @@ function toggleNav() { document.getElementById('navLinks').classList.toggle('ope
 // GUEST LIST — parsed from your invite list
 // ══════════════════════════════════════════
 const GUESTS = [
-  { display: "Ms. Jena Sorrentino & Mr. Anthony Abbatine", search: ["jena sorrentino","anthony abbatine"] },
-  { display: "Mrs. Camille Agro", search: ["camille agro"] },
-  { display: "Mr. James Agro & Guest", search: ["james agro"] },
-  { display: "Mr. & Mrs. Vincent Agro", search: ["vincent agro"] },
-  { display: "Mr. Matthew Anderson", search: ["matthew anderson"] },
-  { display: "Mr. Stefen Astafaj", search: ["stefen astafaj"] },
-  { display: "Mr. Jacob Motz & Ms. Jennifer Battiato", search: ["jacob motz","jennifer battiato"] },
-  { display: "Mr. Ryan Smith & Ms. Katie Battiato", search: ["ryan smith","katie battiato"] },
-  { display: "Mr. Christian Beal", search: ["christian beal"] },
-  { display: "The Bell Family", search: ["bell family","bell"] },
-  { display: "Ms. Jona Bell", search: ["jona bell"] },
-  { display: "Ms. Lori Bell", search: ["lori bell"] },
-  { display: "Mr. Ray Bell", search: ["ray bell"] },
-  { display: "Mr. Robert Bell", search: ["robert bell"] },
-  { display: "Ms. AnneMarie Benedetto", search: ["annemarie benedetto"] },
-  { display: "Mr. & Mrs. James Birkentall", search: ["james birkentall","birkentall"] },
-  { display: "Mr. Gary Brown", search: ["gary brown"] },
-  { display: "Mr. Jeff Brown", search: ["jeff brown","jeffrey brown"] },
-  { display: "Mr. & Mrs. Lawrence Brown", search: ["lawrence brown"] },
-  { display: "Mr. & Mrs. Joseph Cammarata", search: ["joseph cammarata","joe cammarata"] },
-  { display: "Ms. Angela Carucci", search: ["angela carucci"] },
-  { display: "Mr. Christopher Cassano", search: ["christopher cassano","chris cassano"] },
-  { display: "Mr. & Mrs. Derek Choi", search: ["derek choi"] },
-  { display: "Mr. Bryan Dalton", search: ["bryan dalton"] },
-  { display: "Mr. Nolan Danielewski & Guest", search: ["nolan danielewski"] },
-  { display: "Mrs. Debbie Sorrentino & Mr. Sandy Desideri", search: ["debbie sorrentino","sandy desideri"] },
-  { display: "Mr. & Mrs. Ralph DeVito", search: ["ralph devito"] },
-  { display: "The Dezio Family", search: ["dezio family","dezio"] },
-  { display: "Mr. & Mrs. John Dezio", search: ["john dezio"] },
-  { display: "Mr. & Mrs. Andrew Diaz", search: ["andrew diaz"] },
-  { display: "Mr. & Mrs. Anthony DiPalermo", search: ["anthony dipalermo"] },
-  { display: "Mr. & Mrs. John DiPalermo", search: ["john dipalermo"] },
-  { display: "Mr. John DiPalermo Jr.", search: ["john dipalermo jr","john dipalermo junior"] },
-  { display: "Mr. & Mrs. Joseph DiPalermo", search: ["joseph dipalermo","joe dipalermo"] },
-  { display: "Mrs. Loretta DiPalermo", search: ["loretta dipalermo"] },
-  { display: "Mr. Jared Drillings & Guest", search: ["jared drillings"] },
-  { display: "Mr. Dean Dulgerian", search: ["dean dulgerian"] },
-  { display: "Ms. Christine Ferreri", search: ["christine ferreri"] },
-  { display: "Dr. & Mrs. Joseph Fiorito", search: ["joseph fiorito","joe fiorito"] },
-  { display: "Mr. & Mrs. Sean Flynn", search: ["sean flynn"] },
-  { display: "Mr. Ivan Garosi", search: ["ivan garosi"] },
-  { display: "Mrs. Florence Gentile", search: ["florence gentile"] },
-  { display: "The Gilmore Family", search: ["gilmore family","gilmore"] },
-  { display: "Mr. Shane Gipson", search: ["shane gipson"] },
-  { display: "Ms. Toni Ann Granello", search: ["toni ann granello","toni granello"] },
-  { display: "Mr. TJ Gregory & Guest", search: ["tj gregory","thomas gregory"] },
-  { display: "Mr. John Sorrentino & Ms. Maggie Haslam", search: ["john sorrentino","maggie haslam"] },
-  { display: "Mr. Brian Hipsman", search: ["brian hipsman"] },
-  { display: "Mr. & Mrs. Derek Hipsman", search: ["derek hipsman"] },
-  { display: "Mr. & Mrs. Eugene Hipsman", search: ["eugene hipsman"] },
-  { display: "Mrs. Filomena Hipsman", search: ["filomena hipsman"] },
-  { display: "Mr. & Mrs. Garrett Hipsman", search: ["garrett hipsman"] },
-  { display: "Mr. & Mrs. John Hipsman", search: ["john hipsman"] },
-  { display: "Mr. Kevin Hipsman", search: ["kevin hipsman"] },
-  { display: "Mr. Matthew Hipsman", search: ["matthew hipsman","matt hipsman"] },
-  { display: "Mr. Michael Hipsman", search: ["michael hipsman","mike hipsman"] },
-  { display: "Mr. & Mrs. Michael Hipsman", search: ["michael hipsman","mike hipsman"] },
-  { display: "Mrs. Sharyn Hipsman", search: ["sharyn hipsman"] },
-  { display: "Mr. Zack Hipsman", search: ["zack hipsman","zachary hipsman"] },
-  { display: "Mr. Daniel Burke & Ms. Avery Holley", search: ["daniel burke","avery holley"] },
-  { display: "The Hudson Family", search: ["hudson family","hudson"] },
-  { display: "Mr. & Mrs. Shawn Hudson", search: ["shawn hudson"] },
-  { display: "Mr. & Mrs. Tyler Hudson", search: ["tyler hudson"] },
-  { display: "Mr. & Mrs. Tanner Hutchinson", search: ["tanner hutchinson"] },
-  { display: "Mr. & Mrs. Michael Katzman", search: ["michael katzman"] },
-  { display: "The Kelly Family", search: ["kelly family","kelly"] },
-  { display: "Mrs. Dorothy Kelly", search: ["dorothy kelly"] },
-  { display: "Mr. & Mrs. John Kenny", search: ["john kenny"] },
-  { display: "Mr. & Mrs. Michael Kenny", search: ["michael kenny"] },
-  { display: "Mrs. Catherine Klein", search: ["catherine klein"] },
-  { display: "Linda Rankin & Joe Kurpel", search: ["linda rankin","joe kurpel","joseph kurpel"] },
-  { display: "The Leshiner Family", search: ["leshiner family","leshiner"] },
-  { display: "The Lewis Family", search: ["lewis family","lewis"] },
-  { display: "Mrs. Helen Lewis", search: ["helen lewis"] },
-  { display: "Mr. & Mrs. Daniel Lue", search: ["daniel lue"] },
-  { display: "Ms. Joyce Marchione", search: ["joyce marchione"] },
-  { display: "Mr. Jacob Marcus", search: ["jacob marcus"] },
-  { display: "Mr. Alden Mathes", search: ["alden mathes"] },
-  { display: "Mr. & Mrs. Paul McCahey", search: ["paul mccahey"] },
-  { display: "Mr. & Mrs. Guy Melita", search: ["guy melita"] },
-  { display: "The Merchant Family", search: ["merchant family","merchant"] },
-  { display: "Mr. Jake Miller", search: ["jake miller"] },
-  { display: "Ms. Denise Mincieli", search: ["denise mincieli"] },
-  { display: "Mr. Andrew Moy", search: ["andrew moy"] },
-  { display: "Mr. & Mrs. Daniel Mulvey", search: ["daniel mulvey"] },
-  { display: "Ms. Andrea O'Gorman", search: ["andrea o'gorman","andrea ogorman"] },
-  { display: "Mr. & Mrs. Sean O'Neil", search: ["sean o'neil","sean oneil"] },
-  { display: "Mr. Vincent Pungello", search: ["vincent pungello"] },
-  { display: "Mr. & Mrs. Catello Rispoli", search: ["catello rispoli"] },
-  { display: "Ms. Joy Rizzo", search: ["joy rizzo"] },
-  { display: "Mrs. Maria Rizzo", search: ["maria rizzo"] },
-  { display: "Mr. & Mrs. Robert Rizzo", search: ["robert rizzo"] },
-  { display: "The Sorrentino Family & Mr. Frank Romano", search: ["sorrentino family","frank romano"] },
-  { display: "Mr. Andrew Salerno", search: ["andrew salerno"] },
-  { display: "Mr. & Mrs. Scherrer", search: ["scherrer"] },
-  { display: "Mr. & Mrs. Frank Schwamborn", search: ["frank schwamborn"] },
-  { display: "Ms. Victoria Scrobe", search: ["victoria scrobe"] },
-  { display: "Mr. & Mrs. John Seeley", search: ["john seeley"] },
-  { display: "The Sorrentino Family", search: ["sorrentino family","sorrentino"] },
-  { display: "Mr. & Mrs. John Sorrentino", search: ["john sorrentino"] },
-  { display: "Mr. & Mrs. Craig Stalker", search: ["craig stalker"] },
-  { display: "Mrs. June Stalker", search: ["june stalker"] },
-  { display: "Ms. Debbie Summerill", search: ["debbie summerill"] },
-  { display: "The Thomas Family", search: ["thomas family","thomas"] },
-  { display: "Mr. Keefe Vallaro & Guest", search: ["keefe vallaro"] },
-  { display: "Mr. & Mrs. Jose Velez", search: ["jose velez"] },
-  { display: "Mr. Robert Wacker", search: ["robert wacker"] },
-  { display: "Mr. Kyle Hipsman & Ms. Kaia Whiteley", search: ["kyle hipsman","kaia whiteley"] }
+  { display: "Ms. Jena Sorrentino & Mr. Anthony Abbatine", last: ["sorrentino", "abbatine"] },
+  { display: "Mrs. Camille Agro", last: ["agro"] },
+  { display: "Mr. James Agro & Guest", last: ["agro"] },
+  { display: "Mr. & Mrs. Vincent Agro", last: ["agro"] },
+  { display: "Mr. Matthew Anderson", last: ["anderson"] },
+  { display: "Mr. Stefen Astafaj", last: ["astafaj"] },
+  { display: "Mr. Jacob Motz & Ms. Jennifer Battiato", last: ["motz", "battiato"] },
+  { display: "Mr. Ryan Smith & Ms. Katie Battiato", last: ["smith", "battiato"] },
+  { display: "Mr. Christian Beal", last: ["beal"] },
+  { display: "The Bell Family", last: ["bell"] },
+  { display: "Ms. Jona Bell", last: ["bell"] },
+  { display: "Ms. Lori Bell", last: ["bell"] },
+  { display: "Mr. Ray Bell", last: ["bell"] },
+  { display: "Mr. Robert Bell", last: ["bell"] },
+  { display: "Ms. AnneMarie Benedetto", last: ["benedetto"] },
+  { display: "Mr. & Mrs. James Birkentall", last: ["birkentall"] },
+  { display: "Mr. Gary Brown", last: ["brown"] },
+  { display: "Mr. Jeff Brown", last: ["brown"] },
+  { display: "Mr. & Mrs. Lawrence Brown", last: ["brown"] },
+  { display: "Mr. & Mrs. Joseph Cammarata", last: ["cammarata"] },
+  { display: "Ms. Angela Carucci", last: ["carucci"] },
+  { display: "Mr. Christopher Cassano", last: ["cassano"] },
+  { display: "Mr. & Mrs. Derek Choi", last: ["choi"] },
+  { display: "Mr. Bryan Dalton", last: ["dalton"] },
+  { display: "Mr. Nolan Danielewski & Guest", last: ["danielewski"] },
+  { display: "Mrs. Debbie Sorrentino & Mr. Sandy Desideri", last: ["sorrentino", "desideri"] },
+  { display: "Mr. & Mrs. Ralph DeVito", last: ["devito"] },
+  { display: "The Dezio Family", last: ["dezio"] },
+  { display: "Mr. & Mrs. John Dezio", last: ["dezio"] },
+  { display: "Mr. & Mrs. Andrew Diaz", last: ["diaz"] },
+  { display: "Mr. & Mrs. Anthony DiPalermo", last: ["dipalermo"] },
+  { display: "Mr. & Mrs. John DiPalermo", last: ["dipalermo"] },
+  { display: "Mr. John DiPalermo Jr.", last: ["dipalermo"] },
+  { display: "Mr. & Mrs. Joseph DiPalermo", last: ["dipalermo"] },
+  { display: "Mrs. Loretta DiPalermo", last: ["dipalermo"] },
+  { display: "Mr. Jared Drillings & Guest", last: ["drillings"] },
+  { display: "Mr. Dean Dulgerian", last: ["dulgerian"] },
+  { display: "Ms. Christine Ferreri", last: ["ferreri"] },
+  { display: "Dr. & Mrs. Joseph Fiorito", last: ["fiorito"] },
+  { display: "Mr. & Mrs. Sean Flynn", last: ["flynn"] },
+  { display: "Mr. Ivan Garosi", last: ["garosi"] },
+  { display: "Mrs. Florence Gentile", last: ["gentile"] },
+  { display: "The Gilmore Family", last: ["gilmore"] },
+  { display: "Mr. Shane Gipson", last: ["gipson"] },
+  { display: "Ms. Toni Ann Granello", last: ["granello"] },
+  { display: "Mr. TJ Gregory & Guest", last: ["gregory"] },
+  { display: "Mr. John Sorrentino & Ms. Maggie Haslam", last: ["sorrentino", "haslam"] },
+  { display: "Mr. Brian Hipsman", last: ["hipsman"] },
+  { display: "Mr. & Mrs. Derek Hipsman", last: ["hipsman"] },
+  { display: "Mr. & Mrs. Eugene Hipsman", last: ["hipsman"] },
+  { display: "Mrs. Filomena Hipsman", last: ["hipsman"] },
+  { display: "Mr. & Mrs. Garrett Hipsman", last: ["hipsman"] },
+  { display: "Mr. & Mrs. John Hipsman", last: ["hipsman"] },
+  { display: "Mr. Kevin Hipsman", last: ["hipsman"] },
+  { display: "Mr. Matthew Hipsman", last: ["hipsman"] },
+  { display: "Mr. Michael Hipsman", last: ["hipsman"] },
+  { display: "Mr. & Mrs. Michael Hipsman", last: ["hipsman"] },
+  { display: "Mrs. Sharyn Hipsman", last: ["hipsman"] },
+  { display: "Mr. Zack Hipsman", last: ["hipsman"] },
+  { display: "Mr. Daniel Burke & Ms. Avery Holley", last: ["burke", "holley"] },
+  { display: "The Hudson Family", last: ["hudson"] },
+  { display: "Mr. & Mrs. Shawn Hudson", last: ["hudson"] },
+  { display: "Mr. & Mrs. Tyler Hudson", last: ["hudson"] },
+  { display: "Mr. & Mrs. Tanner Hutchinson", last: ["hutchinson"] },
+  { display: "Mr. & Mrs. Michael Katzman", last: ["katzman"] },
+  { display: "The Kelly Family", last: ["kelly"] },
+  { display: "Mrs. Dorothy Kelly", last: ["kelly"] },
+  { display: "Mr. & Mrs. John Kenny", last: ["kenny"] },
+  { display: "Mr. & Mrs. Michael Kenny", last: ["kenny"] },
+  { display: "Mrs. Catherine Klein", last: ["klein"] },
+  { display: "Linda Rankin & Joe Kurpel", last: ["rankin", "kurpel"] },
+  { display: "The Leshiner Family", last: ["leshiner"] },
+  { display: "The Lewis Family", last: ["lewis"] },
+  { display: "Mrs. Helen Lewis", last: ["lewis"] },
+  { display: "Mr. & Mrs. Daniel Lue", last: ["lue"] },
+  { display: "Ms. Joyce Marchione", last: ["marchione"] },
+  { display: "Mr. Jacob Marcus", last: ["marcus"] },
+  { display: "Mr. Alden Mathes", last: ["mathes"] },
+  { display: "Mr. & Mrs. Paul McCahey", last: ["mccahey"] },
+  { display: "Mr. & Mrs. Guy Melita", last: ["melita"] },
+  { display: "The Merchant Family", last: ["merchant"] },
+  { display: "Mr. Jake Miller", last: ["miller"] },
+  { display: "Ms. Denise Mincieli", last: ["mincieli"] },
+  { display: "Mr. Andrew Moy", last: ["moy"] },
+  { display: "Mr. & Mrs. Daniel Mulvey", last: ["mulvey"] },
+  { display: "Ms. Andrea O'Gorman", last: ["ogorman", "o'gorman"] },
+  { display: "Mr. & Mrs. Sean O'Neil", last: ["oneil", "o'neil"] },
+  { display: "Mr. Vincent Pungello", last: ["pungello"] },
+  { display: "Mr. & Mrs. Catello Rispoli", last: ["rispoli"] },
+  { display: "Ms. Joy Rizzo", last: ["rizzo"] },
+  { display: "Mrs. Maria Rizzo", last: ["rizzo"] },
+  { display: "Mr. & Mrs. Robert Rizzo", last: ["rizzo"] },
+  { display: "The Sorrentino Family & Mr. Frank Romano", last: ["sorrentino", "romano"] },
+  { display: "Mr. Andrew Salerno", last: ["salerno"] },
+  { display: "Mr. & Mrs. Scherrer", last: ["scherrer"] },
+  { display: "Mr. & Mrs. Frank Schwamborn", last: ["schwamborn"] },
+  { display: "Ms. Victoria Scrobe", last: ["scrobe"] },
+  { display: "Mr. & Mrs. John Seeley", last: ["seeley"] },
+  { display: "The Sorrentino Family", last: ["sorrentino"] },
+  { display: "Mr. & Mrs. John Sorrentino", last: ["sorrentino"] },
+  { display: "Mr. & Mrs. Craig Stalker", last: ["stalker"] },
+  { display: "Mrs. June Stalker", last: ["stalker"] },
+  { display: "Ms. Debbie Summerill", last: ["summerill"] },
+  { display: "The Thomas Family", last: ["thomas"] },
+  { display: "Mr. Keefe Vallaro & Guest", last: ["vallaro"] },
+  { display: "Mr. & Mrs. Jose Velez", last: ["velez"] },
+  { display: "Mr. Robert Wacker", last: ["wacker"] },
+  { display: "Mr. Kyle Hipsman & Ms. Kaia Whiteley", last: ["hipsman", "whiteley"] }
 ];
 
 // ══════════════════════════════════════════
-// FUZZY MATCHING
+// SEARCH BY LAST NAME
 // ══════════════════════════════════════════
 
-// Levenshtein distance for fuzzy matching
-function levenshtein(a, b) {
-  const m = a.length, n = b.length;
-  const dp = Array.from({length: m+1}, (_, i) => [i]);
-  for (let j = 0; j <= n; j++) dp[0][j] = j;
-  for (let i = 1; i <= m; i++)
-    for (let j = 1; j <= n; j++)
-      dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1]
-        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
-  return dp[m][n];
-}
-
-function fuzzyScore(query, candidate) {
-  query = query.toLowerCase().trim();
-  candidate = candidate.toLowerCase().trim();
-  if (candidate.includes(query)) return 1.0;
-  // Try word-by-word matching
-  const qWords = query.split(/\s+/);
-  const cWords = candidate.split(/\s+/);
-  let wordScore = 0;
-  for (const qw of qWords) {
-    let best = 0;
-    for (const cw of cWords) {
-      const maxLen = Math.max(qw.length, cw.length);
-      if (maxLen === 0) continue;
-      const dist = levenshtein(qw, cw);
-      const s = 1 - dist / maxLen;
-      if (s > best) best = s;
-    }
-    wordScore += best;
-  }
-  return wordScore / qWords.length;
-}
-
-function findMatches(query) {
-  if (!query || query.trim().length < 2) return [];
-  const results = [];
+function findByLastName(query) {
+  const q = query.toLowerCase().trim();
+  if (!q || q.length < 2) return [];
   const seen = new Set();
+  const results = [];
   for (const guest of GUESTS) {
-    let best = 0;
-    for (const s of guest.search) {
-      const score = fuzzyScore(query, s);
-      if (score > best) best = score;
-    }
-    if (best >= 0.55 && !seen.has(guest.display)) {
-      seen.add(guest.display);
-      results.push({ guest, score: best });
+    for (const l of guest.last) {
+      if (l.startsWith(q) || l === q) {
+        if (!seen.has(guest.display)) {
+          seen.add(guest.display);
+          results.push(guest);
+        }
+        break;
+      }
     }
   }
-  return results.sort((a,b) => b.score - a.score).slice(0, 5);
+  return results;
 }
 
 // ══════════════════════════════════════════
 // UI LOGIC
 // ══════════════════════════════════════════
 
-let pendingGuest = null;
-
 function searchGuest() {
   const query = document.getElementById('nameInput').value.trim();
-  if (!query) return;
   document.getElementById('lookupError').classList.remove('visible');
   document.getElementById('confirmCard').classList.remove('visible');
-  const matches = findMatches(query);
+  if (!query) return;
+
+  const matches = findByLastName(query);
+
   if (matches.length === 0) {
     document.getElementById('lookupError').classList.add('visible');
-  } else {
-    pendingGuest = matches[0].guest.display;
-    document.getElementById('confirmName').textContent = matches[0].guest.display;
-    document.getElementById('confirmCard').classList.add('visible');
+    return;
   }
+
+  // Build results list
+  const list = document.getElementById('resultsList');
+  list.innerHTML = matches.map(m => `
+    <div class="result-item" onclick="confirmGuest('${m.display.replace(/'/g, "\'")}')">
+      ${m.display}
+    </div>`).join('');
+
+  document.getElementById('confirmCard').classList.add('visible');
 }
 
-function confirmGuest() {
-  if (!pendingGuest) return;
+function confirmGuest(displayName) {
   document.getElementById('confirmCard').classList.remove('visible');
   document.getElementById('lookupError').classList.remove('visible');
-  document.getElementById('matchedGuestField').value = pendingGuest;
+  document.getElementById('matchedGuestField').value = displayName;
 
-  const clean = pendingGuest.replace(/^(Dr\. & Mrs\.|Mr\. & Mrs\.|Mrs\.|Mr\.|Ms\.|Dr\.|The )/,'').trim();
+  const clean = displayName.replace(/^(Dr\. & Mrs\.|Mr\. & Mrs\.|Mrs\.|Mr\.|Ms\.|Dr\.|The )/,'').trim();
   const firstName = clean.split(/\s+/)[0];
 
-  document.getElementById('welcomeMsg').textContent = `Welcome, ${firstName}!`;
+  document.getElementById('welcomeMsg').textContent = \`Welcome, \${firstName}!\`;
   document.getElementById('formFirstName').value = firstName;
 
   const nameParts = clean.split(/\s+/);
@@ -577,7 +558,6 @@ function confirmGuest() {
 }
 
 function resetSearch() {
-  pendingGuest = null;
   document.getElementById('confirmCard').classList.remove('visible');
   document.getElementById('nameInput').value = '';
   document.getElementById('nameInput').focus();
